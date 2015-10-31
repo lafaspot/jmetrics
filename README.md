@@ -1,2 +1,0 @@
-# jmetrics
-Java metrics
