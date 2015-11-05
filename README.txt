@@ -5,7 +5,7 @@ This allow to create definitions files for build jobs pipeline promotions and to
 - To build before you submit a PR
 $ mvn clean install
 
-- For contibutors run deploy to do a push to nexus servers
+- For contibutors run deploy to do a push to nexus servers.
 $ mvn clean deploy -Dgpg.passphrase=[pathPhrase]
 
 - All Pull requests need to pass continous integration before being merged.
