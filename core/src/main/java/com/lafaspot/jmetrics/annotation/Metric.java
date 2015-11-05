@@ -50,4 +50,5 @@ public @interface Metric {
 	 * Metric expression.
 	 */
 	String expression() default "";
+
 }

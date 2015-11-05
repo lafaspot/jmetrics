@@ -86,13 +86,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <dependency>
-                <groupId>org.apache.avro</groupId>
-                <artifactId>avro-tools</artifactId>
-                <version>1.7.7</version>
-                <scope>test</scope>
-            </dependency>
-
             <!-- Pure Java dependencies -->
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -103,11 +96,6 @@
                 <groupId>com.google.code.findbugs</groupId>
                 <artifactId>jsr305</artifactId>
                 <version>1.3.9</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.avro</groupId>
-                <artifactId>avro</artifactId>
-                <version>1.7.7</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -355,7 +343,6 @@
                     <!-- Check test sources for bugs. -->
                     <includeTests>true</includeTests>
                     <includeFilterFile>${main.basedir}/findbugs-include.xml</includeFilterFile>
-                    <excludeFilterFile>${main.basedir}/findbugs-exclude.xml</excludeFilterFile>
                     <threshold>medium</threshold>
                     <!-- No XML output from Findgbugs. -->
                     <xmlOutput>false</xmlOutput>
