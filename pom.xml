@@ -20,6 +20,13 @@
             <email>jpowang@yahoo.com</email>
         </developer>
     </developers>
+    
+    <scm>
+        <developerConnection>scm:git:https://github.com/lafa/jmetrics.git</developerConnection>
+        <connection>scm:git:https://github.com/lafa/jmetrics.git</connection>
+        <url>https://github.com/lafa/jmetrics.git</url>
+        <tag>jmetrics-1.0</tag>
+    </scm>
 
     <issueManagement>
         <system>GitHub</system>
