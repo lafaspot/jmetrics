@@ -13,6 +13,12 @@
         <property name="onCommentFormat" value="CHECKSTYLE\:ON\: ([\w\|]+)" />
         <property name="checkFormat" value="$1" />
     </module>
+	<module name="RegexpHeader">
+			<metadata name="net.sf.eclipsecs.core.comment"
+				value="Checks that the file starts with copyright block." />
+			<property name="headerFile" value="java.header" />
+			<property name="fileExtensions" value="java" />
+	</module>
 
     <module name="TreeWalker">
         <property name="tabWidth" value="4" />
@@ -79,7 +85,6 @@
         <module name="InnerAssignment">
             <property name="severity" value="ignore" />
         </module>
-        <module name="MagicNumber" />
         <module name="MissingSwitchDefault" />
         <!-- <module name="RedundantThrows"> <property name="suppressLoadErrors" 
             value="true"/> </module> -->

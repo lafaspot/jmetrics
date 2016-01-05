@@ -1,0 +1,42 @@
+      {
+           "name": "Mail-Jedi-{{MetricClass}}-{{MethodName}}",
+           "metric_type": "yamas",
+           "threshold": "(  (((test.{{MetricClass}}-{{MethodName}}-ID - baseline.{{MetricClass}}-{{MethodName}}-ID) * 100) / baseline.{{MetricClass}}-{{MethodName}}-ID) > $percentile)",
+           "environment": {
+               "test": "$testCluster",
+               "baseline": "$baselineCluster"
+           },
+           "yamas_input_tags": {
+               "time": {
+                   "downsampler": {
+                       "interval": "60s",
+                       "aggregator": "sum"
+                   },
+                   "aggregator": "zimsum"
+               },
+               "filters": [
+                   {
+                       "tags": [],
+                       "id": "f1"
+                   }
+               ],
+               "metrics": [
+                   {
+                       "id": "{{MetricClass}}-{{MethodName}}-Requests",
+                       "metric": "{{NameSpace}}.{{MetricClass}}.Requests",
+                       "filter": "f1"
+                   },
+                   {
+                       "id": "{{MetricClass}}-{{MethodName}}",
+                       "metric": "{{NameSpace}}.{{MetricClass}}.{{MethodName}}",
+                       "filter": "f1"
+                   }
+               ],
+               "expressions": [
+                   {
+                       "id": "{{MetricClass}}-{{MethodName}}-ID",
+                       "expr": "{{MetricClass}}-{{MethodName}} / {{MetricClass}}-{{MethodName}}-Requests"
+                   }
+               ]
+           }
+       }
