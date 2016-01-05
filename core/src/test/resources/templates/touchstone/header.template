@@ -1,0 +1,124 @@
+{
+ "query": {
+   "start_time": "$start_time",
+   "end_time": "$end_time",
+   "metrics": [
+      {
+           "name": "Mail-Jedi-System-CPU",
+           "metric_type": "yamas",
+           "threshold": "(  test.System-CPU-ID > $percentile)",
+           "environment": {
+               "test": "$testCluster",
+               "baseline": "$baselineCluster"
+           },
+           "yamas_input_tags": {
+               "time": {
+                   "downsampler": {
+                       "interval": "60s",
+                       "aggregator": "sum"
+                   },
+                   "aggregator": "zimsum"
+               },
+               "filters": [
+                   {
+                       "tags": [],
+                       "id": "f1"
+                   }
+               ],
+               "metrics": [
+                   {
+                       "id": "System-Cpu-Idle",
+                       "metric": "{{NameSpace}}.system.cpu.idle",
+                       "filter": "f1"
+                   },
+                   {
+                       "id": "System-Cpu-Iowait",
+                       "metric": "{{NameSpace}}.system.cpu.iowait",
+                       "filter": "f1"
+                   },
+                   {
+                       "id": "System-Cpu-Irq",
+                       "metric": "{{NameSpace}}.system.cpu.irq",
+                       "filter": "f1"
+                   },
+                   {
+                       "id": "System-Cpu-SoftIrq",
+                       "metric": "{{NameSpace}}.system.cpu.softirq",
+                       "filter": "f1"
+                   },
+                   {
+                       "id": "System-Cpu-Nice",
+                       "metric": "{{NameSpace}}.system.cpu.nice",
+                       "filter": "f1"
+                   },
+                   {
+                       "id": "System-Cpu-Sys",
+                       "metric": "{{NameSpace}}.system.cpu.sys",
+                       "filter": "f1"
+                   },
+                   {
+                       "id": "System-Cpu-User",
+                       "metric": "{{NameSpace}}.system.cpu.user",
+                       "filter": "f1"
+                   }
+               ],
+               "expressions": [
+                   {
+                       "id": "System-CPU-ID",
+                       "expr": "((System-Cpu-Iowait + System-Cpu-Irq + System-Cpu-SoftIrq + System-Cpu-Nice + System-Cpu-Sys + System-Cpu-User)/ (System-Cpu-Iowait + System-Cpu-Irq + System-Cpu-SoftIrq + System-Cpu-Nice + System-Cpu-Sys + System-Cpu-User + System-Cpu-Idle))*100"
+                   }
+               ]
+           }
+      },
+      {
+           "name": "Mail-Jedi-System-Memory",
+           "metric_type": "yamas",
+           "threshold": "(  test.System-Memory-ID > $percentile)",
+           "environment": {
+               "test": "$testCluster",
+               "baseline": "$baselineCluster"
+           },
+           "yamas_input_tags": {
+               "time": {
+                   "downsampler": {
+                       "interval": "60s",
+                       "aggregator": "sum"
+                   },
+                   "aggregator": "zimsum"
+               },
+               "filters": [
+                   {
+                       "tags": [],
+                       "id": "f1"
+                   }
+               ],
+               "metrics": [
+                   {
+                       "id": "System-Memory-Buffers-Kb",
+                       "metric": "{{NameSpace}}.system.mem.buffers.kb",
+                       "filter": "f1"
+                   },
+                   {
+                       "id": "System-Memory-Cached-Kb",
+                       "metric": "{{NameSpace}}.system.mem.cached.kb",
+                       "filter": "f1"
+                   },
+                   {
+                       "id": "System-Memory-Free-Kb",
+                       "metric": "{{NameSpace}}.system.mem.free.kb",
+                       "filter": "f1"
+                   },
+                   {
+                       "id": "System-Memory-Total-Kb",
+                       "metric": "{{NameSpace}}.system.mem.total.kb",
+                       "filter": "f1"
+                   }
+               ],
+               "expressions": [
+                   {
+                       "id": "System-Memory-ID",
+                       "expr": "((System-Memory-Total-Kb - (System-Memory-Buffers-Kb + System-Memory-Cached-Kb + System-Memory-Free-Kb)) / System-Memory-Total-Kb)*100"
+                   }
+               ]
+           }
+       },
