@@ -221,8 +221,12 @@ public class TemplateGenerator {
 			break;
 		default:
 			// Check if there are any non-default ones
-			template = new File(templateSrcDir + "/" + templateType + "/" + ".template");
+			template = new File(templateSrcDir + "/" + templateType + ".template");
 			break;
+		}
+		if (template == null || !template.exists()){
+			throw new FileNotFoundException(
+					"Template file " + templateType + ".template not found in " + templateSrcDir);
 		}
 		return template;
 	}
