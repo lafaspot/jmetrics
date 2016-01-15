@@ -224,6 +224,7 @@ public class TemplateGenerator {
 			template = new File(templateSrcDir + "/" + templateType + ".template");
 			break;
 		}
+		
 		if (template == null || !template.exists()){
 			throw new FileNotFoundException(
 					"Template file " + templateType + ".template not found in " + templateSrcDir);
