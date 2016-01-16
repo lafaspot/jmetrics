@@ -19,6 +19,14 @@
 		<url>https://github.com/lafa/jmetrics.git</url>
 		<tag>jmetrics-1.0</tag>
 	</scm>
+	
+	<developers>
+		<developer>
+			<id>lafa</id>
+			<name>Lafa</name>
+			<email>Lafa@lafaspot.com</email>
+		</developer>
+	</developers>
 
 	<issueManagement>
 		<system>GitHub</system>
