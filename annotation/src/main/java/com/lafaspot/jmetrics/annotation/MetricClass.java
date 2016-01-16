@@ -41,7 +41,7 @@ public @interface MetricClass {
 	/**
 	 * Specific application to be applied.
 	 */
-	String[] applications() default "";
+	String[] applications() default {};
 
 	/**
 	 * Enable/Disable the metric class annotation.

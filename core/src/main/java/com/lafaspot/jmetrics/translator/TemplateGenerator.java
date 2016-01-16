@@ -24,7 +24,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -99,12 +98,15 @@ public class TemplateGenerator {
 		if (!Files.isDirectory(Paths.get(outputDirectory))) {
 			throw new IllegalArgumentException("Directory: " + outputDirectory + " does not exist.");
 		}
+		if (!Files.isDirectory(Paths.get(templateSrcDir))) {
+			throw new IllegalArgumentException("Directory: " + templateSrcDir + " does not exist.");
+		}
 		Set<Class<?>> annotatedClazzez = null;
 		final AnnotationClassScanner<MetricClass> scanClasses = new AnnotationClassScanner<MetricClass>(
 				MetricClass.class, allowFilters, this.logManager);
 		annotatedClazzez = scanClasses.scanAnnotatedClasses();
 
-		Path outputFilePath = Paths.get(outputDirectory + outputFileName);
+		Path outputFilePath = Paths.get(outputDirectory + "/" + outputFileName);
 		File outputFile = new File(outputFilePath.toUri());
 
 		if (outputFile.exists()) {
@@ -210,30 +212,20 @@ public class TemplateGenerator {
 	 */
 	private File getTemplateFile(final String templateType, final String templateSrcDir) throws FileNotFoundException {
 		File template = null;
-		URL url = null;
-		ClassLoader classLoader = this.getClass().getClassLoader();
 		switch (templateType) {
 		case "header":
-			url = classLoader.getResource(templateSrcDir + "/header.template");
-			if (url != null) {
-				template = new File(url.getFile());
-			}
+			template = new File(templateSrcDir + "/header.template");
 			break;
 		case "footer":
-			url = classLoader.getResource(templateSrcDir + "/footer.template");
-			if (url != null) {
-				template = new File(url.getFile());
-			}
+			template = new File(templateSrcDir + "/footer.template");
 			break;
 		default:
 			// Check if there are any non-default ones
-			url = classLoader.getResource(templateSrcDir + "/" + templateType + ".template");
-			if (url != null) {
-				template = new File(url.getFile());
-			}
+			template = new File(templateSrcDir + "/" + templateType + ".template");
 			break;
 		}
-		if (url == null || template == null) {
+
+		if (template == null || !template.exists()) {
 			throw new FileNotFoundException(
 					"Template file " + templateType + ".template not found in " + templateSrcDir);
 		}

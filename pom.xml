@@ -5,22 +5,14 @@
 	<groupId>com.github.lafa.jmetrics</groupId>
 	<artifactId>jmetrics</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.3</version>
+	<version>1.0.4</version>
 	<name>${project.artifactId}</name>
 	<url>https://github.com/lafaspot/jmetrics</url>
 	<description>Parent POM file for jmetrics project</description>
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
-
-	<developers>
-		<developer>
-			<id>jpowang</id>
-			<name>Jason Wang</name>
-			<email>jpowang@yahoo.com</email>
-		</developer>
-	</developers>
-
+	
 	<scm>
 		<developerConnection>scm:git:https://github.com/lafa/jmetrics.git</developerConnection>
 		<connection>scm:git:https://github.com/lafa/jmetrics.git</connection>
