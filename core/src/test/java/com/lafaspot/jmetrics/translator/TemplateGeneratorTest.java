@@ -50,7 +50,46 @@ public class TemplateGeneratorTest {
 		Map<String, Object> mustacheMap = new HashMap<String, Object>();
 		mustacheMap.put("NameSpace", "Mail-Jedi");
 		File srcDir = new File(this.getClass().getClassLoader().getResource("").getPath());
-		generator.generate(mustacheMap, list, "jws-touchstone.template", "./target/", srcDir + "/templates/touchstone/");
+		generator.generate(mustacheMap, list, "jws-touchstone.template", "./target/",
+				srcDir + "/templates/touchstone/");
 		Assert.assertTrue(true);
+	}
+
+	/**
+	 * Test parsing the expression
+	 *
+	 */
+	@Test
+	public void testParser() {
+		TemplateGenerator generator = new TemplateGenerator("test", new LogManager());
+		List<String> methodList = generator.parseExpression("foo");
+		Assert.assertEquals(methodList.size(), 1);
+		Assert.assertTrue(methodList.contains("foo"));
+
+		methodList = generator.parseExpression("foo/bar + fooly-barly- 100 +200");
+		Assert.assertEquals(methodList.size(), 4);
+		Assert.assertTrue(methodList.contains("foo"));
+		Assert.assertTrue(methodList.contains("bar"));
+		Assert.assertTrue(methodList.contains("fooly"));
+		Assert.assertTrue(methodList.contains("barly"));
+
+		methodList = generator.parseExpression("foo+-*/()=1234567890");
+		Assert.assertEquals(methodList.size(), 1);
+		Assert.assertTrue(methodList.contains("foo"));
+
+		methodList = generator.parseExpression("foo+-*/()=http5xxs+7890");
+		Assert.assertEquals(methodList.size(), 2);
+		Assert.assertTrue(methodList.contains("foo"));
+		Assert.assertTrue(methodList.contains("http5xxs"));
+
+		methodList = generator.parseExpression("(http5xxs)+(http300)+5");
+		Assert.assertEquals(methodList.size(), 2);
+		Assert.assertTrue(methodList.contains("http300"));
+		Assert.assertTrue(methodList.contains("http5xxs"));
+
+		methodList = generator.parseExpression("(http5xxs+http300)*5");
+		Assert.assertEquals(methodList.size(), 2);
+		Assert.assertTrue(methodList.contains("http300"));
+		Assert.assertTrue(methodList.contains("http5xxs"));
 	}
 }

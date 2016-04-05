@@ -1,42 +1,54 @@
        {
            "name": "Mail-Jedi-{{MetricClass}}-{{MethodName}}",
            "metric_type": "yamas",
-           "threshold": "(  (((test.{{MetricClass}}-{{MethodName}}-ID - baseline.{{MetricClass}}-{{MethodName}}-ID) * 100) / baseline.{{MetricClass}}-{{MethodName}}-ID) > $percentile)",
+           "threshold": "(test.expressionid > $latencyThreshold)",
            "environment": {
-               "test": "$testCluster",
-               "baseline": "$baselineCluster"
+               "test":{
+                        "filter": "$testCluster",
+                        "group_by": true,
+                        "type": "literal_or",
+                        "tagk": "mlcluster"
+                      }
            },
            "yamas_input_tags": {
                "time": {
                    "downsampler": {
-                       "interval": "60s",
+                       "interval": "240s",
                        "aggregator": "sum"
                    },
                    "aggregator": "zimsum"
                },
+               "explicitTags": true,
                "filters": [
-                   {
-                       "tags": [],
-                       "id": "f1"
-                   }
+                  {
+                        "tags": [
+                            {
+                                "filter": "SUM",
+                                "group_by": true,
+                                "type": "literal_or",
+                                "tagk": "_aggregate"
+                            }
+                        ],
+                        "id": "f1"
+                    }
                ],
                "metrics": [
                    {
-                       "id": "{{MetricClass}}-{{MethodName}}-Count",
+                       "id": "latencycount",
                        "metric": "{{NameSpace}}.{{MetricClass}}.{{MethodName}}.Count",
                        "filter": "f1"
                    },
                    {
-                       "id": "{{MetricClass}}-{{MethodName}}",
+                       "id": "latency”,
                        "metric": "{{NameSpace}}.{{MetricClass}}.{{MethodName}}",
                        "filter": "f1"
                    }
                ],
                "expressions": [
                    {
-                       "id": "{{MetricClass}}-{{MethodName}}-ID",
-                       "expr": "{{MetricClass}}-{{MethodName}} / {{MetricClass}}-{{MethodName}}-Count"
+                       "id": "expressionid",
+                       "expr": "latency / latencycount)"
                    }
                ]
            }
-       }
+       },

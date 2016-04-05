@@ -1,42 +1,56 @@
       {
            "name": "Mail-Jedi-{{MetricClass}}-{{MethodName}}",
            "metric_type": "yamas",
-           "threshold": "(  (((test.{{MetricClass}}-{{MethodName}}-ID - baseline.{{MetricClass}}-{{MethodName}}-ID) * 100) / baseline.{{MetricClass}}-{{MethodName}}-ID) > $percentile)",
+           "threshold": "(test.expressionid > $failureRatio)",
            "environment": {
-               "test": "$testCluster",
-               "baseline": "$baselineCluster"
+               "test":{
+                       	"filter": "$testCluster",
+                        "group_by": true,
+                        "type": "literal_or",
+                        "tagk": "mlcluster"
+                       }
            },
            "yamas_input_tags": {
                "time": {
                    "downsampler": {
-                       "interval": "60s",
+                       "interval": "240s",
                        "aggregator": "sum"
                    },
                    "aggregator": "zimsum"
                },
-               "filters": [
+                "explicitTags": true,
+                "filters": [
                    {
-                       "tags": [],
-                       "id": "f1"
-                   }
-               ],
+                        "tags": [
+                            {
+                                "filter": "SUM",
+                                "group_by": true,
+                                "type": "literal_or",
+                                "tagk": "_aggregate"
+                            }
+                        ],
+                        "id": "f1"
+                    }
+                ],
                "metrics": [
+		   {{#MethodList}}
                    {
-                       "id": "{{MetricClass}}-{{MethodName}}-Requests",
-                       "metric": "{{NameSpace}}.{{MetricClass}}.Requests",
+                       "id": "{{.}}",
+                       "metric": "{{NameSpace}}.{{MetricClass}}.{{.}}",
                        "filter": "f1"
                    },
+		   {{/MethodList}}
                    {
-                       "id": "{{MetricClass}}-{{MethodName}}",
+                       "id": "notinuse",
                        "metric": "{{NameSpace}}.{{MetricClass}}.{{MethodName}}",
                        "filter": "f1"
-                   }
+                   }				
                ],
                "expressions": [
                    {
-                       "id": "{{MetricClass}}-{{MethodName}}-ID",
-                       "expr": "{{MetricClass}}-{{MethodName}} / {{MetricClass}}-{{MethodName}}-Requests"
+                       "id": "expressionid",
+                       "expr": "{{Expression}}"
                    }
                ]
            }
-       }
+       },
