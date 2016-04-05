@@ -5,7 +5,7 @@
 	<groupId>com.github.lafa.jmetrics</groupId>
 	<artifactId>jmetrics</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 	<name>${project.artifactId}</name>
 	<url>https://github.com/lafaspot/jmetrics</url>
 	<description>Parent POM file for jmetrics project</description>
@@ -564,5 +564,39 @@
 				</plugins>
 			</build>
 		</profile>
+    <profile>
+        <id>build-extras</id>
+        <activation>
+            <activeByDefault>true</activeByDefault>
+        </activation>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                    <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
 	</profiles>
 </project>

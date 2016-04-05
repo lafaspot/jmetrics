@@ -1,3 +1,82 @@
+ {
+           "name": "Mail-Jedi-System-CPU",
+           "metric_type": "yamas",
+           "threshold": "(  test.cpuusagepercent > $cpuMemoryMaxPercent)",
+           "environment": {
+               "test": {
+                         "filter": "$systemTest",
+                         "group_by": true,
+                         "type": "literal_or",
+                         "tagk": "hostgroup"
+                       }
+           },
+           "yamas_input_tags": {
+               "time": {
+                   "downsampler": {
+                       "interval": "240s",
+                       "aggregator": "sum"
+                   },
+                   "aggregator": "zimsum"
+               },
+                "explicitTags": true,
+                "filters": [
+                  {
+                        "tags": [
+                            {
+                                "filter": "SUM",
+                                "group_by": true,
+                                "type": "literal_or",
+                                "tagk": "_aggregate"
+                            }
+                        ],
+                        "id": "f1"
+                    }
+                ],
+               "metrics": [
+                   {
+                       "id": "betasystemcpuidle",
+                       "metric": "{{NameSpace}}.system.cpu.idle",
+                       "filter": "f1"
+                   },
+                   {
+                       "id": "betasystemcpuiowait",
+                       "metric": "{{NameSpace}}.system.cpu.iowait",
+                       "filter": "f1"
+                   },
+                   {
+                       "id": "betasystemcpuirq",
+                       "metric": "{{NameSpace}}.system.cpu.irq",
+                       "filter": "f1"
+                   },
+                   {
+                       "id": "betasystemcpusoftirq",
+                       "metric": "{{NameSpace}}.system.cpu.softirq",
+                       "filter": "f1"
+                   },
+                   {
+                       "id": "betasystemcpunice",
+                       "metric": "{{NameSpace}}.system.cpu.nice",
+                       "filter": "f1"
+                   },
+                   {
+                       "id": "betasystemcpusys",
+                       "metric": "{{NameSpace}}.system.cpu.sys",
+                       "filter": "f1"
+                   },
+                   {
+                       "id": "betasystemcpuuser",
+                       "metric": "{{NameSpace}}.system.cpu.user",
+                       "filter": "f1"
+                   }
+               ],
+               "expressions": [
+                   {
+                       "id": "cpuusagepercent",
+                       "expr": "(((betasystemcpuidle + betasystemcpuiowait + betasystemcpuirq + betasystemcpusoftirq + betasystemcpunice + betasystemcpusys + betasystemcpuuser) - betasystemcpuidle) / (betasystemcpuiowait + betasystemcpuirq + betasystemcpusoftirq + betasystemcpunice + betasystemcpusys + betasystemcpuuser + betasystemcpuidle))*100"
+                   }
+               ]
+           }
+      }
    ]
  }
 }
