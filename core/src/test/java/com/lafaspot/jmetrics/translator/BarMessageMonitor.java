@@ -31,14 +31,14 @@ import com.lafaspot.jmetrics.annotation.MetricClass;
 public class BarMessageMonitor {
 
 	/**
-	 * Test latency.
+	 * Test Failure.
 	 * 
-	 * @return latency
+	 * @return failure
 	 */
 	@Metric(enable = true, type = "latency")
 	@Alert(max = 1000, min = 500)
-	@MetricCheck(type = "count")
-	public long getBarLatency() {
+	@MetricCheck(type = "count", expression = "BarFailures / BarCount")
+	public long getBarFailures() {
 		return 500;
 	}
 
@@ -61,6 +61,18 @@ public class BarMessageMonitor {
 	@Metric(enable = true, type = "count")
 	@Alert(max = 200, min = 100)
 	public long getBarCount() {
+		return 100;
+	}
+
+	/**
+	 * Test bar latency.
+	 *
+	 * @return bar latency
+	 */
+	@Metric(enable = true, type = "latency")
+	@MetricCheck(enable = true, type = "latency")
+	@Alert(max = 200, min = 100)
+	public long getBarLatency() {
 		return 100;
 	}
 }

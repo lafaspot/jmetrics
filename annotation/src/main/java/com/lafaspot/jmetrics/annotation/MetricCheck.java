@@ -41,4 +41,20 @@ public @interface MetricCheck {
 	 * Metric type.
 	 */
 	String type() default "";
+
+	/**
+	 * Expression which allows different method as part of the calculation.
+	 *
+	 */
+	String expression() default "";
+
+	/**
+	 * Metric maximum threshold value.
+	 */
+	long max() default -1;
+
+	/**
+	 * Metric minimum threshold value.
+	 */
+	long min() default -1;
 }

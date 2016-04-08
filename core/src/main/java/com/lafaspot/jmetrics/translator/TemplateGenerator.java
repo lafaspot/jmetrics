@@ -126,7 +126,6 @@ public class TemplateGenerator {
 				continue;
 			}
 			mustacheScope.put("MetricClass", metricClassName);
-			mustacheScope.put("MetricClassLowerCase", metricClassName.toLowerCase());
 
 			final List<Method> methods = new ArrayList<Method>(Arrays.asList(annotatedClazz.getDeclaredMethods()));
 
@@ -143,7 +142,30 @@ public class TemplateGenerator {
 					// Removing the "get" in the method name
 					String methodName = removeGetPrefix(method);
 					mustacheScope.put("MethodName", methodName);
-					mustacheScope.put("MethodNameLowerCase", methodName.toLowerCase());
+
+					List<String> methodList = new ArrayList<String>();
+					if (metricCheck.expression() != null && !metricCheck.expression().trim().isEmpty()) {
+						methodList = parseExpression(metricCheck.expression());
+						mustacheScope.put("Expression", metricCheck.expression());
+					} else {
+						methodList.add(methodName);
+						mustacheScope.put("Expression", methodName);
+					}
+
+					if (!methodList.contains(methodName)) {
+						throw new IllegalArgumentException(metricClass + "." + methodName + " expression is invalid");
+					}
+
+					mustacheScope.put("MethodList", methodList);
+
+					mustacheScope.remove("Max");
+					mustacheScope.remove("Min");
+					if (metricCheck.max() != -1) {
+						mustacheScope.put("Max", metricCheck.max());
+					}
+					if (metricCheck.min() != -1) {
+						mustacheScope.put("Min", metricCheck.max());
+					}
 
 					File templateFile = getTemplateFile(metricCheck.type(), templateSrcDir);
 					if (templateFile.exists()) {
@@ -154,7 +176,25 @@ public class TemplateGenerator {
 		}
 
 		writeFooter(templateSrcDir, outputFile, mustacheScope);
+	}
 
+	/**
+	 * Parse the string to extract all method names in the expression.
+	 *
+	 * @param expression
+	 *            expression
+	 * @return List of method names.
+	 */
+	protected List<String> parseExpression(final String expression) {
+		String[] methodNames = expression.split("[-+*/=()]");
+		List<String> methodNamesList = new ArrayList<String>();
+		for (String method : methodNames) {
+			String trimmed = method.trim();
+			if (!trimmed.matches("^-?\\d+$") && !trimmed.isEmpty()) {
+				methodNamesList.add(trimmed);
+			}
+		}
+		return methodNamesList;
 	}
 
 	/**
