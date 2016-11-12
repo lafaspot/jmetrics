@@ -39,9 +39,7 @@ import com.github.mustachejava.MustacheFactory;
 import com.lafaspot.common.util.AnnotationClassScanner;
 import com.lafaspot.jmetrics.annotation.MetricCheck;
 import com.lafaspot.jmetrics.annotation.MetricClass;
-import com.lafaspot.logfast.logging.LogContext;
 import com.lafaspot.logfast.logging.LogManager;
-import com.lafaspot.logfast.logging.Logger;
 
 /**
  * Translates the template file to the formatted files based on the parameter
@@ -52,9 +50,6 @@ public class TemplateGenerator {
 	/** Mustache Factory. */
 	private final MustacheFactory mf;
 
-	/** Logger class. */
-	private final Logger logger;
-
 	/** LogManager. */
 	private final LogManager logManager;
 
@@ -63,7 +58,7 @@ public class TemplateGenerator {
 	/**
 	 * Constructor for TemplateGenerator which outputs the corresponding files
 	 * based on the templateType and metricType.
-	 * 
+	 *
 	 * @param metricClassApplication
 	 *            metricClass application name
 	 * @param logManager
@@ -73,13 +68,11 @@ public class TemplateGenerator {
 		mf = new DefaultMustacheFactory();
 		this.metricClassApplication = metricClassApplication;
 		this.logManager = logManager;
-		LogContext context = new TemplateGeneratorContext(this.getClass().getName());
-		logger = logManager.getLogger(context);
 	}
 
 	/**
 	 * Generate the files based on the templates.
-	 * 
+	 *
 	 * @param mustacheScope
 	 *            map where mustache references for substitution.
 	 * @param allowFilters
@@ -199,14 +192,14 @@ public class TemplateGenerator {
 
 	/**
 	 * Write the header to the output file based on the template type specified.
-	 * 
+	 *
 	 * @param outputFile
 	 *            output file
 	 * @param mustacheScope
 	 *            map where mustache references for substitution.
 	 * @param templateType
 	 *            type of template
-	 * 
+	 *
 	 * @throws FileNotFoundException
 	 *             throw when file is not found
 	 */
@@ -220,14 +213,14 @@ public class TemplateGenerator {
 
 	/**
 	 * Write the footer to the output file based on the template type specified.
-	 * 
+	 *
 	 * @param outputFile
 	 *            output file
 	 * @param mustacheScope
 	 *            map where mustache references for substitution.
 	 * @param templateType
 	 *            type of template
-	 * 
+	 *
 	 * @throws FileNotFoundException
 	 *             throw when file is not found
 	 */
@@ -241,7 +234,7 @@ public class TemplateGenerator {
 
 	/**
 	 * To retrieve the template file based on the metric type and template type.
-	 * 
+	 *
 	 * @param templateType
 	 *            template type
 	 * @param templateSrcDir
@@ -275,7 +268,7 @@ public class TemplateGenerator {
 	/**
 	 * Based on the template file and the mustache variables. Output the result
 	 * by appending to the outputFile.
-	 * 
+	 *
 	 * @param template
 	 *            location of the template file.
 	 * @param outputFile
@@ -285,19 +278,20 @@ public class TemplateGenerator {
 	 */
 	private void outputToFile(final File template, final File outputFile, final Map<String, Object> mustacheScope) {
 		BufferedWriter bw = null;
+        boolean error = false;
 		Mustache mustache = mf.compile(template.getPath());
 		try {
 			bw = new BufferedWriter(new FileWriter(outputFile, true));
 			mustache.execute(bw, mustacheScope).flush();
 			bw.newLine();
 		} catch (IOException e) {
-			logger.error("Error occurs in writing/reading template/output file", e);
+            error = true;
 		} finally {
 			if (bw != null) {
 				try {
 					bw.close();
 				} catch (IOException e) {
-					logger.error("Error occurs in writing/reading template/output file", e);
+                                    error = true;
 				}
 			}
 		}
@@ -305,7 +299,7 @@ public class TemplateGenerator {
 
 	/**
 	 * Remove the "get" word in the method name.
-	 * 
+	 *
 	 * @param method
 	 *            method name
 	 * @return method name without the "get" word if it exists.
