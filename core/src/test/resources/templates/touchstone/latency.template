@@ -1,7 +1,7 @@
        {
            "name": "Mail-Jedi-{{MetricClass}}-{{MethodName}}",
            "metric_type": "yamas",
-           "threshold": "(test.expressionid > $latencyThreshold)",
+           "threshold": "(test.expressionid > {{MaxDeviation}})",
            "environment": {
                "test":{
                         "filter": "$testCluster",
