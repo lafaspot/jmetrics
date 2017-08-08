@@ -59,7 +59,7 @@ public @interface MetricCheck {
 	long min() default -1;
 
 	/**
-	 * Metric maximum deviation allowed for given type.
+	 * Metric maximum deviation threshold allowed for given type.
 	 */
 	double maxDeviation() default 1;
 }
