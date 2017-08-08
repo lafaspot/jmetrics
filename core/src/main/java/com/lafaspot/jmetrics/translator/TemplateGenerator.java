@@ -150,6 +150,7 @@ public class TemplateGenerator {
 					}
 
 					mustacheScope.put("MethodList", methodList);
+					mustacheScope.put("MaxDeviation", metricCheck.maxDeviation());
 
 					mustacheScope.remove("Max");
 					mustacheScope.remove("Min");
@@ -157,7 +158,7 @@ public class TemplateGenerator {
 						mustacheScope.put("Max", metricCheck.max());
 					}
 					if (metricCheck.min() != -1) {
-						mustacheScope.put("Min", metricCheck.max());
+						mustacheScope.put("Min", metricCheck.min());
 					}
 
 					File templateFile = getTemplateFile(metricCheck.type(), templateSrcDir);
@@ -276,7 +277,7 @@ public class TemplateGenerator {
 	 * @param mustacheScope
 	 *            map where mustache references for substitution.
 	 */
-        @SuppressWarnings("checkstyle:emptyblock")
+	@SuppressWarnings("checkstyle:emptyblock")
 	private void outputToFile(final File template, final File outputFile, final Map<String, Object> mustacheScope) {
 		BufferedWriter bw = null;
 		Mustache mustache = mf.compile(template.getPath());
