@@ -1,0 +1,81 @@
+  {
+           "name": "{{NameSpace}}-{{MetricClass}}-{{MethodName}} ($currentTarget) ($stableTarget)",
+           "metric_type": "yamas",
+           {{#Precondition}}
+           "threshold": "(current.{{Precondition}} < 500 || ((current.metricContext > 0 && current.metricContext < 10 && current.metricValue/stable.metricValue > 1.5) || (current.metricContext > 10 && current.metricContext < 100 && current.metricValue/stable.metricValue > 1.1) || (current.metricContext > 100 && current.metricValue/stable.metricValue > 1.05))",
+           {{/Precondition}}
+           
+           {{^Precondition}}
+           "threshold": "(current.metricContext > 0 && current.metricContext < 10 && current.metricValue/stable.metricValue > 1.5) || (current.metricContext > 10 && current.metricContext < 100 && current.metricValue/stable.metricValue > 1.1) || (current.metricContext > 100 && current.metricValue/stable.metricValue > 1.05)",
+           {{/Precondition}}
+           "max-retries": 2,
+           "retry-delay": 10000,
+           "environment": {
+               "current":{
+                        "filter": "$currentTarget",
+                        "group_by": true,
+                        "type": "literal_or",
+                        "tagk": "$dimension"
+                       },
+               "stable":{
+                        "filter": "$stableTarget",
+                        "group_by": true,
+                        "type": "literal_or",
+                        "tagk": "$dimension"
+                       }
+           },
+           "yamas_input_tags": {
+               "time": {
+                   "downsampler": {
+                       "interval": "60s",
+                       "aggregator": "avg"
+                   },
+                   "aggregator": "zimsum"
+               },
+                "explicitTags": true,
+                "filters": [
+                   {
+                        "tags": [
+                            {
+                                "filter": "SUM",
+                                "group_by": true,
+                                "type": "literal_or",
+                                "tagk": "_aggregate"
+                            }
+                        ],
+                        "id": "f1"
+                    }
+                ],
+               "metrics": [
+           {{#MethodList}}
+                   {
+                       "id": "{{.}}",
+                       "metric": "{{NameSpace}}.{{MetricClass}}.{{.}}",
+                       "filter": "f1"
+                   },
+           {{/MethodList}}
+                   {
+                       "id": "notinuse",
+                       "metric": "{{NameSpace}}.{{MetricClass}}.{{MethodName}}",
+                       "filter": "f1"
+                   }
+               ],
+               "expressions": [
+                   {
+                       "id": "metricValue",
+                       "expr": "{{Expression}}"
+                   },
+                   {{#Precondition}}
+                   {
+                       "id": "metricPrecondition",
+                       "expr": "{{Precondition}}"
+                   },
+                   {{/Precondition}}
+                   {
+                       "id": "metricContext",
+                       "expr": "{{MethodName}}"
+                   }
+                   
+               ]
+           }
+       },
