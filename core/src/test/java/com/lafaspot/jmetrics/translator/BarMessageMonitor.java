@@ -37,8 +37,20 @@ public class BarMessageMonitor {
 	 */
 	@Metric(enable = true, type = "latency")
 	@Alert(max = 1000, min = 500)
-	@MetricCheck(type = "count", expression = "BarFailures / BarCount")
+	@MetricCheck(type = "ratio", expression = "BarFailures / BarCount")
 	public long getBarFailures() {
+		return 500;
+	}
+
+	/**
+	 * Test Failure.
+	 * 
+	 * @return failure
+	 */
+	@Metric(enable = true, type = "latency")
+	@Alert(max = 1000, min = 500)
+	@MetricCheck(type = "ratio", expression = "BarCountFailures")
+	public long getBarCountFailures() {
 		return 500;
 	}
 

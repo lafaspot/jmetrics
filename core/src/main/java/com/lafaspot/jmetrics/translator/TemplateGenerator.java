@@ -29,6 +29,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -56,8 +57,8 @@ public class TemplateGenerator {
 	private final String metricClassApplication;
 
 	/**
-	 * Constructor for TemplateGenerator which outputs the corresponding files
-	 * based on the templateType and metricType.
+	 * Constructor for TemplateGenerator which outputs the corresponding files based
+	 * on the templateType and metricType.
 	 *
 	 * @param metricClassApplication
 	 *            metricClass application name
@@ -73,8 +74,8 @@ public class TemplateGenerator {
 	/**
 	 * Generate the files based on the templates.
 	 *
-	 * @param mustacheScope
-	 *            map where mustache references for substitution.
+	 * @param namespace
+	 *            namespace where monitors being stored
 	 * @param allowFilters
 	 *            list of filters allowed
 	 * @param outputFileName
@@ -86,8 +87,8 @@ public class TemplateGenerator {
 	 * @throws IOException
 	 *             throw when IO exception occurs
 	 */
-	public void generate(final Map<String, Object> mustacheScope, final List<String> allowFilters,
-			final String outputFileName, final String outputDirectory, final String templateSrcDir) throws IOException {
+	public void generate(final String namespace, final List<String> allowFilters, final String outputFileName,
+			final String outputDirectory, final String templateSrcDir) throws IOException {
 		if (!Files.isDirectory(Paths.get(outputDirectory))) {
 			throw new IllegalArgumentException("Directory: " + outputDirectory + " does not exist.");
 		}
@@ -107,7 +108,10 @@ public class TemplateGenerator {
 		}
 		outputFile.createNewFile();
 
-		writeHeader(templateSrcDir, outputFile, mustacheScope);
+		final Map<String, Object> globalScope = new HashMap<>();
+		globalScope.put("NameSpace", namespace);
+
+		writeHeader(templateSrcDir, outputFile, globalScope);
 
 		for (final Class<?> annotatedClazz : annotatedClazzez) {
 			final MetricClass metricClass = annotatedClazz.getAnnotation(MetricClass.class);
@@ -118,10 +122,8 @@ public class TemplateGenerator {
 			if (!metricClass.enable() || metricClassName == null || metricClassName.isEmpty()) {
 				continue;
 			}
-			mustacheScope.put("MetricClass", metricClassName);
 
 			final List<Method> methods = new ArrayList<Method>(Arrays.asList(annotatedClazz.getDeclaredMethods()));
-
 			for (final Method method : methods) {
 				if (method.isAnnotationPresent(MetricCheck.class)) {
 					MetricCheck metricCheck = method.getAnnotation(MetricCheck.class);
@@ -132,44 +134,52 @@ public class TemplateGenerator {
 					if (metricCheck.type() == null || metricCheck.type().isEmpty()) {
 						continue;
 					}
+
+					final Map<String, Object> metricScope = new HashMap<>();
+					metricScope.put("NameSpace", namespace);
+					metricScope.put("MetricClass", metricClassName);
+
 					// Removing the "get" in the method name
 					String methodName = removeGetPrefix(method);
-					mustacheScope.put("MethodName", methodName);
+					metricScope.put("MethodName", methodName);
 
 					List<String> methodList = new ArrayList<String>();
 					if (metricCheck.expression() != null && !metricCheck.expression().trim().isEmpty()) {
 						methodList = parseExpression(metricCheck.expression());
-						mustacheScope.put("Expression", metricCheck.expression());
+						metricScope.put("Expression", metricCheck.expression());
 					} else {
 						methodList.add(methodName);
-						mustacheScope.put("Expression", methodName);
+						metricScope.put("Expression", methodName);
 					}
 
 					if (!methodList.contains(methodName)) {
 						throw new IllegalArgumentException(metricClass + "." + methodName + " expression is invalid");
 					}
 
-					mustacheScope.put("MethodList", methodList);
-					mustacheScope.put("MaxDeviation", metricCheck.maxDeviation());
+					// if denominator is present in expression include as precondition
+					if (methodList.size() > 1) {
+						metricScope.put("Precondition", methodList.get(1));
+					}
+					metricScope.put("MethodList", methodList);
+					metricScope.put("MaxDeviation", metricCheck.maxDeviation());
 
-					mustacheScope.remove("Max");
-					mustacheScope.remove("Min");
+					metricScope.remove("Max");
+					metricScope.remove("Min");
 					if (metricCheck.max() != -1) {
-						mustacheScope.put("Max", metricCheck.max());
+						metricScope.put("Max", metricCheck.max());
 					}
 					if (metricCheck.min() != -1) {
-						mustacheScope.put("Min", metricCheck.min());
+						metricScope.put("Min", metricCheck.min());
 					}
 
 					File templateFile = getTemplateFile(metricCheck.type(), templateSrcDir);
 					if (templateFile.exists()) {
-						outputToFile(templateFile, outputFile, mustacheScope);
+						outputToFile(templateFile, outputFile, metricScope);
 					}
 				}
 			}
 		}
-
-		writeFooter(templateSrcDir, outputFile, mustacheScope);
+		writeFooter(templateSrcDir, outputFile, globalScope);
 	}
 
 	/**
@@ -196,7 +206,7 @@ public class TemplateGenerator {
 	 *
 	 * @param outputFile
 	 *            output file
-	 * @param mustacheScope
+	 * @param globalScope
 	 *            map where mustache references for substitution.
 	 * @param templateType
 	 *            type of template
@@ -204,11 +214,11 @@ public class TemplateGenerator {
 	 * @throws FileNotFoundException
 	 *             throw when file is not found
 	 */
-	private void writeHeader(final String templateSrcDir, final File outputFile,
-			final Map<String, Object> mustacheScope) throws FileNotFoundException {
+	private void writeHeader(final String templateSrcDir, final File outputFile, final Map<String, Object> globalScope)
+			throws FileNotFoundException {
 		final File headerTemplate = getTemplateFile("header", templateSrcDir);
 		if (headerTemplate.exists()) {
-			outputToFile(headerTemplate, outputFile, mustacheScope);
+			outputToFile(headerTemplate, outputFile, globalScope);
 		}
 	}
 
@@ -217,7 +227,7 @@ public class TemplateGenerator {
 	 *
 	 * @param outputFile
 	 *            output file
-	 * @param mustacheScope
+	 * @param globalScope
 	 *            map where mustache references for substitution.
 	 * @param templateType
 	 *            type of template
@@ -225,11 +235,11 @@ public class TemplateGenerator {
 	 * @throws FileNotFoundException
 	 *             throw when file is not found
 	 */
-	private void writeFooter(final String templateSrcDir, final File outputFile,
-			final Map<String, Object> mustacheScope) throws FileNotFoundException {
+	private void writeFooter(final String templateSrcDir, final File outputFile, final Map<String, Object> globalScope)
+			throws FileNotFoundException {
 		final File footerTemplate = getTemplateFile("footer", templateSrcDir);
 		if (footerTemplate.exists()) {
-			outputToFile(footerTemplate, outputFile, mustacheScope);
+			outputToFile(footerTemplate, outputFile, globalScope);
 		}
 	}
 
@@ -267,8 +277,8 @@ public class TemplateGenerator {
 	}
 
 	/**
-	 * Based on the template file and the mustache variables. Output the result
-	 * by appending to the outputFile.
+	 * Based on the template file and the mustache variables. Output the result by
+	 * appending to the outputFile.
 	 *
 	 * @param template
 	 *            location of the template file.
@@ -310,5 +320,4 @@ public class TemplateGenerator {
 		}
 		return methodName;
 	}
-
 }

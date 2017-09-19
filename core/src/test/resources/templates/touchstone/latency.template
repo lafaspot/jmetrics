@@ -39,7 +39,7 @@
                        "filter": "f1"
                    },
                    {
-                       "id": "latency”,
+                       "id": "latency",
                        "metric": "{{NameSpace}}.{{MetricClass}}.{{MethodName}}",
                        "filter": "f1"
                    }

@@ -21,9 +21,7 @@ package com.lafaspot.jmetrics.translator;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -47,10 +45,8 @@ public class TemplateGeneratorTest {
 		TemplateGenerator generator = new TemplateGenerator("test", new LogManager());
 		List<String> list = new ArrayList<String>();
 		list.add("com.lafaspot.");
-		Map<String, Object> mustacheMap = new HashMap<String, Object>();
-		mustacheMap.put("NameSpace", "Mail-Jedi");
 		File srcDir = new File(this.getClass().getClassLoader().getResource("").getPath());
-		generator.generate(mustacheMap, list, "jws-touchstone.template", "./target/",
+		generator.generate("Test", list, "jws-touchstone.template", "./target/",
 				srcDir + "/templates/touchstone/");
 		Assert.assertTrue(true);
 	}
