@@ -51,15 +51,15 @@ public @interface MetricCheck {
 	/**
 	 * Metric maximum threshold value.
 	 */
-	long max() default -1;
+	long max() default 0;
 
 	/**
 	 * Metric minimum threshold value.
 	 */
-	long min() default -1;
+	long min() default 0;
 
 	/**
 	 * Metric maximum deviation threshold allowed for given type.
 	 */
-	double maxDeviation() default 1;
+	double maxDeviation() default 0;
 }
