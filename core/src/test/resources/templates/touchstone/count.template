@@ -1,5 +1,5 @@
       {
-           "name": "Mail-Jedi-{{MetricClass}}-{{MethodName}}",
+           "name": "Workspace-{{MetricClass}}-{{MethodName}}",
            "metric_type": "yamas",
            "threshold": "(test.expressionid > $failureRatio)",
            "environment": {
@@ -47,6 +47,10 @@
                    }				
                ],
                "expressions": [
+               	   {
+                       "id": "normalizer",
+                       "expr": "{{Normalizer}}"
+                   },
                    {
                        "id": "expressionid",
                        "expr": "{{Expression}}"

@@ -152,6 +152,11 @@ public class TemplateGenerator {
 						metricScope.put("Expression", methodName);
 					}
 
+					if (methodList.size() > 1) {
+						metricScope.put("Normalizer", methodList.get(1));
+					} else {
+						metricScope.put("Normalizer", methodName);
+					}
 					if (!methodList.contains(methodName)) {
 						throw new IllegalArgumentException(metricClass + "." + methodName + " expression is invalid");
 					}
