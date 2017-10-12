@@ -1,5 +1,5 @@
        {
-           "name": "Mail-Jedi-{{MetricClass}}-{{MethodName}}",
+           "name": "Workspace-{{MetricClass}}-{{MethodName}}",
            "metric_type": "yamas",
            "threshold": "(test.expressionid > {{MaxDeviation}})",
            "environment": {
