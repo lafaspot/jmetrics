@@ -16,10 +16,8 @@
  *  ====================================================================
  */
 
-
 /**
- * MetricOutputter.
- * 
- * This package contains the code common to several classes.
+ * Monitor.
+ *
  */
-package com.lafaspot.jmetrics.common;
+package com.lafaspot.jmetrics.monitor;

@@ -15,11 +15,8 @@
  * limitations under the License.
  *  ====================================================================
  */
-
-
 /**
- * MetricOutputter.
- * 
- * This package contains the code common to several classes.
+ * This package contains Unit Tests for classes in common.
+ *
  */
 package com.lafaspot.jmetrics.common;
