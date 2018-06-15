@@ -67,7 +67,8 @@ public class MonitorDirectory<T extends BaseMonitor> {
                 try {
                     monitor = this.clazz.getConstructor(TimeValue.class, TimeValue.class).newInstance(this.window, this.expire);
                     monitor.setBeanName(this, key);
-                } catch (final InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+                } catch (final InstantiationException | IllegalAccessException
+                		| IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
                     throw new RuntimeException("Failed to create monitor instance. ", e);
                 }
                 directory.putIfAbsent(key, monitor);

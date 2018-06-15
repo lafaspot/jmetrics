@@ -21,7 +21,6 @@ package com.lafaspot.jmetrics.common;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.StringJoiner;
 import java.util.TreeSet;
 
 import javax.annotation.Nonnull;
