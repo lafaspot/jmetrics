@@ -56,6 +56,11 @@ public class TypeFormatException extends IllegalArgumentException {
      */
     @Override
     public String getMessage() {
-        return "Invalid key '" + keyName + "' value. " + super.getMessage();
+    	final StringBuilder stringBuilder = new StringBuilder();
+    	stringBuilder.append("Invalid key '");
+    	stringBuilder.append(keyName);
+    	stringBuilder.append("' value. ");
+    	stringBuilder.append(super.getMessage());
+    	return stringBuilder.toString();
     }
 }

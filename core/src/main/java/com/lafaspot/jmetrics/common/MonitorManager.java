@@ -60,12 +60,9 @@ public class MonitorManager<T extends BaseMonitor> {
     	final Set<String> orderedNamespace = new TreeSet<>();
         orderedNamespace.addAll(namespace);
         orderedNamespace.addAll(constNamespaceSet);
-        final StringJoiner namespaceJoiner = new StringJoiner("|");
-        for (String element : orderedNamespace) {
-            namespaceJoiner.add(element);
-        }
+
         return monitorDirectory.getMonitor(clazz.getClass().getName() + ":namespace="
-                + namespaceJoiner.toString() + ",type="
+                + String.join("|", orderedNamespace) + ",type="
                 + clazz.getCanonicalName() + ",id=" + ID);
     }
 }

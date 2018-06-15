@@ -170,7 +170,17 @@ public class MonitorStateHandler<T extends State<T>> {
 
    @Override
    public String toString() {
-       return "[ Window = " + getWindow() + ", StartTime = " + getStartTime() + ", LastUpdate = " + getLastUpdate() + ", Stable = [" + stable()
-               + "], Current = [" + current() + "] ]";
+	   final StringBuilder stringBuilder = new StringBuilder();
+	   stringBuilder.append("[ Window = ");
+	   stringBuilder.append(getWindow());
+	   stringBuilder.append(", StartTime = ");
+	   stringBuilder.append(getStartTime());
+	   stringBuilder.append(", LastUpdate = ");
+	   stringBuilder.append(", Stable = [");
+	   stringBuilder.append(stable());
+	   stringBuilder.append("], Current = [");
+	   stringBuilder.append(current());
+	   stringBuilder.append("] ]");
+       return stringBuilder.toString();
    }
 }
