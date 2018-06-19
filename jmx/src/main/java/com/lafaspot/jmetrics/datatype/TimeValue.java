@@ -16,7 +16,7 @@
  *  ====================================================================
  */
 
-package com.lafaspot.jmetrics.common;
+package com.lafaspot.jmetrics.datatype;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -29,7 +29,7 @@ import javax.annotation.Nonnull;
 /**
  * Physical quantities with units of time, and 64-bit integer values.
  *
- * @author sgrennan
+ * @author manish211
  *
  */
 public final class TimeValue implements java.io.Serializable, Comparable<TimeValue> {

@@ -16,7 +16,7 @@
  *  ====================================================================
  */
 
-package com.lafaspot.jmetrics.common;
+package com.lafaspot.jmetrics.monitor;
 
 import java.util.List;
 import java.util.Random;
@@ -28,7 +28,7 @@ import javax.annotation.Nonnull;
 /**
  * Creates and hands out BaseMonitor objects to callers. Also has utility methods for any tasks that deal with the entire BaseMonitor collection.
  * @param <T> the type parameter
- * @author lafa
+ * @author manish211
  */
 public class MonitorManager<T extends BaseMonitor> {
     /** The id used to distinguish monitors of different classloaders. */
@@ -59,9 +59,9 @@ public class MonitorManager<T extends BaseMonitor> {
     	final Set<String> orderedNamespace = new TreeSet<>();
         orderedNamespace.addAll(namespace);
         orderedNamespace.addAll(constNamespaceSet);
-
-        return monitorDirectory.getMonitor(clazz.getClass().getName() + ":namespace="
-                + String.join("|", orderedNamespace) + ",type="
-                + clazz.getCanonicalName() + ",id=" + ID);
+        final StringBuilder stringBuilder = new StringBuilder();
+        return monitorDirectory.getMonitor(stringBuilder.append(clazz.getClass().getName()).append(":namespace=")
+        .append(String.join("|", orderedNamespace)).append(",type=").append(clazz.getCanonicalName()).append(",id=")
+        .append(ID).toString());
     }
 }

@@ -16,12 +16,12 @@
  *  ====================================================================
  */
 
-package com.lafaspot.jmetrics.common;
+package com.lafaspot.jmetrics.monitor;
 
 /**
  * BaseMonitor to be used by all JMX monitors.
  * 
- * @author jaikit
+ * @author manish211
  * 
  */
 public interface BaseMonitor {

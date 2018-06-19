@@ -23,10 +23,12 @@ import java.util.concurrent.TimeUnit;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.lafaspot.jmetrics.datatype.TimeValue;
+
 /**
  * Unit tests of the {@linkplain TimeValue}.
  * 
- * @author sgrennan
+ * @author manish211
  *
  */
 public class TimeValueTest {

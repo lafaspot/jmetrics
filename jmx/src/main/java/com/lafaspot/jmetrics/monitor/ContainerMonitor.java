@@ -36,10 +36,7 @@ import javax.management.ObjectName;
 import com.lafaspot.jmetrics.annotation.Metric;
 import com.lafaspot.jmetrics.annotation.MetricCheck;
 import com.lafaspot.jmetrics.annotation.MetricClass;
-import com.lafaspot.jmetrics.common.MonitorDirectory;
-import com.lafaspot.jmetrics.common.MonitorManager;
-import com.lafaspot.jmetrics.common.MonitorStateHandler;
-import com.lafaspot.jmetrics.common.TimeValue;
+import com.lafaspot.jmetrics.datatype.TimeValue;
 
 /**
  * Records incoming http request stats in an interval.
@@ -232,7 +229,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.common.monitor.BaseMonitor#getWindow()
+     * @see com.lafaspot.jmetrics.monitor.BaseMonitor#getWindow()
      */
     @Override
     public long getWindow() {
@@ -243,7 +240,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.common.monitor.BaseMonitor#getUptime()
+     * @see com.lafaspot.jmetrics.monitor.BaseMonitor#getUptime()
      */
     @Override
     public long getUptime() {
@@ -254,7 +251,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.common.monitor.BaseMonitor#getLastUpdate()
+     * @see com.lafaspot.jmetrics.monitor.BaseMonitor#getLastUpdate()
      */
     @Override
     public long getLastUpdate() {
@@ -265,7 +262,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.common.monitor.BaseMonitor#getLastWrite()
+     * @see com.lafaspot.jmetrics.monitor.BaseMonitor#getLastWrite()
      */
     @Override
     public long getLastWrite() {
@@ -276,7 +273,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.common.monitor.BaseMonitor#getExpireTime()
+     * @see com.lafaspot.jmetrics.monitor.BaseMonitor#getExpireTime()
      */
     @Override
     public long getExpireTime() {
@@ -286,7 +283,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.common.monitor.BaseMonitor#unRegisterMBean()
+     * @see com.lafaspot.jmetrics.monitor.BaseMonitor#unRegisterMBean()
      */
     @Override
     public void unRegisterMBean() {
@@ -311,7 +308,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.mail.admin.monitor.ContainerMonitorMBean#getMaxTime()
+     * @see com.lafaspot.jmetrics.monitor.ContainerMonitorMBean#getMaxTime()
      */
     @Override
     @Metric(enable = true, type = "count")
@@ -336,7 +333,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.mail.admin.monitor.ContainerMonitorMBean#getRequestCount()
+     * @see com.lafaspot.jmetrics.monitor.ContainerMonitorMBean#getRequestCount()
      */
     @Override
     @Metric(enable = true, type = "count")
@@ -348,7 +345,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.mail.admin.monitor.ContainerMonitorMBean#getErrorCount()
+     * @see com.lafaspot.jmetrics.monitor.ContainerMonitorMBean#getErrorCount()
      */
     @Metric(enable = true, type = "count")
     @MetricCheck(enable = true, type = "ratio", expression = "Errors / Requests", maxDeviation = PCT005)
@@ -361,7 +358,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.mail.admin.monitor.ContainerMonitorMBean#getBytesReceived()
+     * @see com.lafaspot.jmetrics.monitor.ContainerMonitorMBean#getBytesReceived()
      */
     @Override
     @Metric(enable = true, type = "count")
@@ -373,7 +370,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.mail.admin.monitor.ContainerMonitorMBean#getBytesSent()
+     * @see com.lafaspot.jmetrics.monitor.ContainerMonitorMBean#getBytesSent()
      */
     @Override
     @Metric(enable = true, type = "count")
@@ -386,7 +383,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
      * (non-Javadoc) The Metric "type" is kept as 'latency' instead of 'average' since both latency and percentage does the average. MetricCollector
      * does not understand average as of now.
      *
-     * @see com.yahoo.mail.admin.monitor.ContainerMonitorMBean#getErrorPercentage()
+     * @see com.lafaspot.jmetrics.monitor.ContainerMonitorMBean#getErrorPercentage()
      */
     @Override
     @Metric(enable = true, type = "latency", unit = "percentage")
@@ -403,7 +400,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.mail.admin.monitor.ContainerMonitorMBean#getRejected()
+     * @see com.lafaspot.jmetrics.monitor.ContainerMonitorMBean#getRejected()
      */
     @Override
     @Metric(enable = true, type = "count")
@@ -556,7 +553,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.mail.admin.monitor.ContainerMonitorMBean#getResponse1xx()
+     * @see com.lafaspot.jmetrics.monitor.ContainerMonitorMBean#getResponse1xx()
      */
     @Metric(enable = true, type = "count")
     @Override
@@ -568,7 +565,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.mail.admin.monitor.ContainerMonitorMBean#getResponse2xx()
+     * @see com.lafaspot.jmetrics.monitor.ContainerMonitorMBean#getResponse2xx()
      */
     @Metric(enable = true, type = "count")
     @Override
@@ -580,7 +577,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.mail.admin.monitor.ContainerMonitorMBean#getResponse3xx()
+     * @see com.lafaspot.jmetrics.monitor.ContainerMonitorMBean#getResponse3xx()
      */
     @Metric(enable = true, type = "count")
     @Override
@@ -592,7 +589,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.mail.admin.monitor.ContainerMonitorMBean#getResponse4xx()
+     * @see com.lafaspot.jmetrics.monitor.ContainerMonitorMBean#getResponse4xx()
      */
     @Metric(enable = true, type = "count")
     @MetricCheck(enable = true, type = "ratio", expression = "Responses4xx / Requests", maxDeviation = PCT005)
@@ -605,7 +602,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.mail.admin.monitor.ContainerMonitorMBean#getResponse5xx()
+     * @see com.lafaspot.jmetrics.monitor.ContainerMonitorMBean#getResponse5xx()
      */
     @Metric(enable = true, type = "count")
     @MetricCheck(enable = true, type = "ratio", expression = "Responses5xx / Requests", maxDeviation = PCT005)
@@ -618,7 +615,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.mail.admin.monitor.ContainerMonitorMBean#getRequestsActive()
+     * @see com.lafaspot.jmetrics.monitor.ContainerMonitorMBean#getRequestsActive()
      */
     @Metric(enable = true, type = "count")
     @Override
@@ -631,7 +628,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
     /*
      * (non-Javadoc)
      *
-     * @see com.yahoo.mail.admin.monitor.ContainerMonitorMBean#getRequestsActiveMax()
+     * @see com.lafaspot.jmetrics.monitor.ContainerMonitorMBean#getRequestsActiveMax()
      */
     @Metric(enable = true, type = "count")
     @Override

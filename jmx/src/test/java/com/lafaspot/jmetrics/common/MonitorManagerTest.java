@@ -30,7 +30,10 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.lafaspot.jmetrics.datatype.TimeValue;
 import com.lafaspot.jmetrics.monitor.ContainerMonitor;
+import com.lafaspot.jmetrics.monitor.MonitorDirectory;
+import com.lafaspot.jmetrics.monitor.MonitorManager;
 
 /**
  * This class tests the monitor manager.

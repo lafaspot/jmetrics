@@ -15,7 +15,7 @@
  * limitations under the License.
  *  ====================================================================
  */
-package com.lafaspot.jmetrics.common;
+package com.lafaspot.jmetrics.datatype;
 
 /**
  * Exception for illegal values.

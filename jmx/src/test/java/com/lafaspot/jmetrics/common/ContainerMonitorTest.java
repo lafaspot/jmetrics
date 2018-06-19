@@ -24,11 +24,13 @@ import java.util.concurrent.TimeUnit;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.lafaspot.jmetrics.datatype.TimeValue;
+import com.lafaspot.jmetrics.monitor.ContainerMonitor;
+import com.lafaspot.jmetrics.monitor.MonitorDirectory;
+
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import java.lang.management.ManagementFactory;
-
-import com.lafaspot.jmetrics.monitor.ContainerMonitor;
 
 /**
  * Test class for ContainerMonitor.

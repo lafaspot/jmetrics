@@ -15,22 +15,24 @@
  * limitations under the License.
  *  ====================================================================
  */
-package com.lafaspot.jmetrics.common;
+package com.lafaspot.jmetrics.monitor;
 
 import java.lang.reflect.Array;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
-import com.lafaspot.jmetrics.common.MonitorStateHandler.State;
 
 import javax.annotation.Nonnull;
+
+import com.lafaspot.jmetrics.datatype.TimeValue;
+import com.lafaspot.jmetrics.monitor.MonitorStateHandler.State;
 
 
 /**
 * Handler to be used to manager monitor state changes for monitor that use 2 instances of counters. One instance (current) is the write copy, this
 * copy is becomes the stable copy once the timwWindow expires, the update method should be called frequently to allow for the flip to happen.
 *
-* @author lafa
+* @author manish211
 *
 * @param <T> - client state class
 */
@@ -171,16 +173,7 @@ public class MonitorStateHandler<T extends State<T>> {
    @Override
    public String toString() {
 	   final StringBuilder stringBuilder = new StringBuilder();
-	   stringBuilder.append("[ Window = ");
-	   stringBuilder.append(getWindow());
-	   stringBuilder.append(", StartTime = ");
-	   stringBuilder.append(getStartTime());
-	   stringBuilder.append(", LastUpdate = ");
-	   stringBuilder.append(", Stable = [");
-	   stringBuilder.append(stable());
-	   stringBuilder.append("], Current = [");
-	   stringBuilder.append(current());
-	   stringBuilder.append("] ]");
-       return stringBuilder.toString();
+	   return stringBuilder.append("[ Window = ").append(getWindow()).append(", StartTime = ").append(getStartTime()).append(", LastUpdate = ")
+	   .append(", Stable = [").append(stable()).append("], Current = [").append(current()).append("] ]").toString();
    }
 }

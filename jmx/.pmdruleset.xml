@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         name="M2Eclipse PMD RuleSet"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+   <description>M2Eclipse PMD RuleSet</description>
+   <exclude-pattern>.*/Users/adityajoshi/Codebase/jmetrics/jmx/src/test/java.*</exclude-pattern>
+   <exclude-pattern>.*/Users/adityajoshi/Codebase/jmetrics/jmx/target.*</exclude-pattern>
+   <rule ref="rulesets/java/strings.xml/StringInstantiation">
+      <priority>1</priority>
+   </rule>
+   <rule ref="rulesets/java/logging-jakarta-commons.xml/GuardLogStatement">
+      <priority>1</priority>
+   </rule>
+</ruleset>
