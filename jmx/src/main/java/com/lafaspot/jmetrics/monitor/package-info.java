@@ -17,7 +17,7 @@
  */
 
 /**
- * This package has code related to monitors
+ * This package has code related to monitors.
  *
  */
 package com.lafaspot.jmetrics.monitor;
