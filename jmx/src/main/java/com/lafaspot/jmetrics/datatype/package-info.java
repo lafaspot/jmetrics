@@ -17,7 +17,7 @@
  */
 
 /**
- * This package has code related to monitors
+ * This package contains the code for datatypes.
  *
  */
-package com.lafaspot.jmetrics.monitor;
+package com.lafaspot.jmetrics.datatype;

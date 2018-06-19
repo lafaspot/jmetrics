@@ -41,7 +41,6 @@ public class MonitorDirectoryTest {
 
         directory.getMonitor("one");
         directory.getMonitor("one");
-
         directory.getMonitor("one");
         directory.getMonitor("one");
         directory.getMonitor("two");
