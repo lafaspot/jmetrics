@@ -16,7 +16,7 @@
  *  ====================================================================
  */
 
-package com.lafaspot.jmetrics.monitor;
+package com.lafaspot.jmetrics.common;
 
 /**
  * BaseMonitor to be used by all JMX monitors.

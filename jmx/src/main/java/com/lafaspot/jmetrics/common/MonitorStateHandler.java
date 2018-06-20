@@ -15,7 +15,7 @@
  * limitations under the License.
  *  ====================================================================
  */
-package com.lafaspot.jmetrics.monitor;
+package com.lafaspot.jmetrics.common;
 
 import java.lang.reflect.Array;
 import java.util.concurrent.TimeUnit;
@@ -24,8 +24,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.annotation.Nonnull;
 
-import com.lafaspot.jmetrics.datatype.TimeValue;
-import com.lafaspot.jmetrics.monitor.MonitorStateHandler.State;
+import com.lafaspot.jmetrics.common.datatype.TimeValue;
+import com.lafaspot.jmetrics.common.MonitorStateHandler.State;
 
 
 /**

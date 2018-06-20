@@ -16,7 +16,7 @@
  *  ====================================================================
  */
 
-package com.lafaspot.jmetrics.monitor;
+package com.lafaspot.jmetrics.common;
 
 import java.util.List;
 import java.util.Random;

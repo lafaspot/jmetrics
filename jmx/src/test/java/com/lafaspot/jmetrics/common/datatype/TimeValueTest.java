@@ -16,14 +16,12 @@
  *  ====================================================================
  */
 
-package com.lafaspot.jmetrics.common;
+package com.lafaspot.jmetrics.common.datatype;
 
 import java.util.concurrent.TimeUnit;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import com.lafaspot.jmetrics.datatype.TimeValue;
 
 /**
  * Unit tests of the {@linkplain TimeValue}.

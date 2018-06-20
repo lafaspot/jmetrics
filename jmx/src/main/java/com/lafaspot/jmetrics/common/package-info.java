@@ -17,7 +17,8 @@
  */
 
 /**
- * This package has code related to monitors.
+ * This package contains common classes.
  *
  */
-package com.lafaspot.jmetrics.monitor;
+
+package com.lafaspot.jmetrics.common;

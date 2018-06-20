@@ -16,12 +16,12 @@
  *  ====================================================================
  */
 
-package com.lafaspot.jmetrics.monitor;
+package com.lafaspot.jmetrics.common;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.lafaspot.jmetrics.datatype.TimeValue;
+import com.lafaspot.jmetrics.common.datatype.TimeValue;
 
 
 /**

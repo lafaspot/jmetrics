@@ -16,7 +16,9 @@
  *  ====================================================================
  */
 
-package com.lafaspot.jmetrics.monitor;
+package com.lafaspot.jmetrics.jmx_sample;
+
+import com.lafaspot.jmetrics.common.BaseMonitor;
 
 /**
  * Container monitor interface.

@@ -20,4 +20,5 @@
  * This package contains the code for datatypes.
  *
  */
-package com.lafaspot.jmetrics.datatype;
+
+package com.lafaspot.jmetrics.common.datatype;

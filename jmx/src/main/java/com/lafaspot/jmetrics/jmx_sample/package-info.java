@@ -17,7 +17,8 @@
  */
 
 /**
- * Metric Annotation.
+ * This package contains examples for using jmetric.
+ *
  */
 
-package com.lafaspot.jmetrics.annotation;
+package com.lafaspot.jmetrics.jmx_sample;

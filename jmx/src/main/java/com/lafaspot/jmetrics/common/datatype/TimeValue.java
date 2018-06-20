@@ -16,7 +16,7 @@
  *  ====================================================================
  */
 
-package com.lafaspot.jmetrics.datatype;
+package com.lafaspot.jmetrics.common.datatype;
 
 import java.util.HashMap;
 import java.util.Locale;

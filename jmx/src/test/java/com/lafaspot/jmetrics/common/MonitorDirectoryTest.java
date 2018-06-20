@@ -22,9 +22,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.testng.annotations.Test;
 
-import com.lafaspot.jmetrics.datatype.TimeValue;
-import com.lafaspot.jmetrics.monitor.ContainerMonitor;
-import com.lafaspot.jmetrics.monitor.MonitorDirectory;
+import com.lafaspot.jmetrics.common.datatype.TimeValue;
+import com.lafaspot.jmetrics.jmx_sample.ContainerMonitor;
 
 /**
  * Test for MonitorDirectory.
