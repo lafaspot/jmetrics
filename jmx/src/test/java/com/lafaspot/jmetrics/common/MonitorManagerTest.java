@@ -30,7 +30,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.lafaspot.jmetrics.common.datatype.TimeValue;
+import com.lafaspot.common.types.TimeValue;
 import com.lafaspot.jmetrics.jmx_sample.ContainerMonitor;
 
 /**

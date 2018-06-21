@@ -36,7 +36,7 @@ import javax.management.ObjectName;
 import com.lafaspot.jmetrics.annotation.Metric;
 import com.lafaspot.jmetrics.annotation.MetricCheck;
 import com.lafaspot.jmetrics.annotation.MetricClass;
-import com.lafaspot.jmetrics.common.datatype.TimeValue;
+import com.lafaspot.common.types.TimeValue;
 import com.lafaspot.jmetrics.common.MonitorDirectory;
 import com.lafaspot.jmetrics.common.MonitorManager;
 import com.lafaspot.jmetrics.common.MonitorStateHandler;

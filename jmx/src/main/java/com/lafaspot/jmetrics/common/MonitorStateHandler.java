@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.annotation.Nonnull;
 
-import com.lafaspot.jmetrics.common.datatype.TimeValue;
+import com.lafaspot.common.types.TimeValue;
 import com.lafaspot.jmetrics.common.MonitorStateHandler.State;
 
 

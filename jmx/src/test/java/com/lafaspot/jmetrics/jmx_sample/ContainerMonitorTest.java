@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.lafaspot.jmetrics.common.datatype.TimeValue;
+import com.lafaspot.common.types.TimeValue;
 import com.lafaspot.jmetrics.common.MonitorDirectory;
 
 import javax.management.MalformedObjectNameException;

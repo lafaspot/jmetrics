@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.testng.annotations.Test;
 
-import com.lafaspot.jmetrics.common.datatype.TimeValue;
+import com.lafaspot.common.types.TimeValue;
 import com.lafaspot.jmetrics.jmx_sample.ContainerMonitor;
 
 /**
