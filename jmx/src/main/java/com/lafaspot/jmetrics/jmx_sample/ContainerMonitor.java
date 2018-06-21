@@ -40,6 +40,7 @@ import com.lafaspot.common.types.TimeValue;
 import com.lafaspot.jmetrics.common.MonitorDirectory;
 import com.lafaspot.jmetrics.common.MonitorManager;
 import com.lafaspot.jmetrics.common.MonitorStateHandler;
+
 /**
  * Records incoming http request stats in an interval.
  *
