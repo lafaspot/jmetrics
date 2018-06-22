@@ -17,7 +17,8 @@
  */
 
 /**
- * Metric Annotation.
+ * This package contains common classes.
+ *
  */
 
-package com.lafaspot.jmetrics.annotation;
+package com.lafaspot.jmetrics.common;
