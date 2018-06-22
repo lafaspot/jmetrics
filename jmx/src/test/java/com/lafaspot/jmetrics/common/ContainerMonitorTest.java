@@ -16,7 +16,7 @@
  *  ====================================================================
  */
 
-package com.lafaspot.jmetrics.jmx_sample;
+package com.lafaspot.jmetrics.common;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -25,7 +25,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.lafaspot.common.types.TimeValue;
-import com.lafaspot.jmetrics.common.MonitorDirectory;
+
 
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;

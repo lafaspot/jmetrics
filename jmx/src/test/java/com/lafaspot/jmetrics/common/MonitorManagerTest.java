@@ -31,7 +31,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.lafaspot.common.types.TimeValue;
-import com.lafaspot.jmetrics.jmx_sample.ContainerMonitor;
 
 /**
  * This class tests the monitor manager.
@@ -64,7 +63,7 @@ public class MonitorManagerTest {
         final ContainerMonitor monitor = containerMonitorManager.getMonitor(Arrays.asList("host1"));
         Assert.assertNotNull(monitor);
         final ObjectName beanName = new ObjectName(monitor.getBeanName());
-        Assert.assertEquals(beanName.getKeyProperty("type"), "com.lafaspot.jmetrics.jmx_sample.ContainerMonitor");
+        Assert.assertEquals(beanName.getKeyProperty("type"), "com.lafaspot.jmetrics.common.ContainerMonitor");
         Assert.assertTrue(beanName.getKeyProperty("namespace").contains("host1"));
         Assert.assertEquals(beanName.getDomain(), "java.lang.Class");
         Assert.assertEquals(containerMonitorManager.getMonitor(Arrays.asList("host1")), monitor);
@@ -80,7 +79,7 @@ public class MonitorManagerTest {
         Assert.assertNotNull(monitor);
         Assert.assertEquals(containerMonitorManager.getMonitor(Arrays.asList("host2", "host1")), monitor);
         final ObjectName beanName = new ObjectName(monitor.getBeanName());
-        Assert.assertEquals(beanName.getKeyProperty("type"), "com.lafaspot.jmetrics.jmx_sample.ContainerMonitor");
+        Assert.assertEquals(beanName.getKeyProperty("type"), "com.lafaspot.jmetrics.common.ContainerMonitor");
         Assert.assertTrue(beanName.getKeyProperty("namespace").contains("host1"));
         Assert.assertTrue(beanName.getKeyProperty("namespace").contains("host2"));
         Assert.assertEquals(beanName.getDomain(), "java.lang.Class");
@@ -96,7 +95,7 @@ public class MonitorManagerTest {
         Assert.assertNotNull(monitor);
         Assert.assertEquals(containerMonitorManager.getMonitor(Arrays.asList("host2", "host1 01")), monitor);
         final ObjectName beanName = new ObjectName(monitor.getBeanName());
-        Assert.assertEquals(beanName.getKeyProperty("type"), "com.lafaspot.jmetrics.jmx_sample.ContainerMonitor");
+        Assert.assertEquals(beanName.getKeyProperty("type"), "com.lafaspot.jmetrics.common.ContainerMonitor");
         Assert.assertTrue(beanName.getKeyProperty("namespace").contains("host1 01"));
     }
 }

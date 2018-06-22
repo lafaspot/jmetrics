@@ -16,7 +16,7 @@
  *  ====================================================================
  */
 
-package com.lafaspot.jmetrics.jmx_sample;
+package com.lafaspot.jmetrics.common;
 
 import java.lang.management.ManagementFactory;
 import java.util.Set;
@@ -37,9 +37,7 @@ import com.lafaspot.jmetrics.annotation.Metric;
 import com.lafaspot.jmetrics.annotation.MetricCheck;
 import com.lafaspot.jmetrics.annotation.MetricClass;
 import com.lafaspot.common.types.TimeValue;
-import com.lafaspot.jmetrics.common.MonitorDirectory;
-import com.lafaspot.jmetrics.common.MonitorManager;
-import com.lafaspot.jmetrics.common.MonitorStateHandler;
+
 
 /**
  * Records incoming http request stats in an interval.

@@ -19,12 +19,8 @@
 package com.lafaspot.jmetrics.common;
 
 import java.util.concurrent.TimeUnit;
-
 import com.lafaspot.common.types.TimeValue;
 import org.testng.annotations.Test;
-
-
-import com.lafaspot.jmetrics.jmx_sample.ContainerMonitor;
 
 /**
  * Test for MonitorDirectory.
