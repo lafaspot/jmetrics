@@ -19,4 +19,5 @@
 /**
  * MetricOutputter.
  */
+
 package com.lafaspot.jmetrics.translator;

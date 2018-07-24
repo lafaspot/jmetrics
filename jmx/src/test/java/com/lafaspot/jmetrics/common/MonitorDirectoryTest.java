@@ -19,10 +19,8 @@
 package com.lafaspot.jmetrics.common;
 
 import java.util.concurrent.TimeUnit;
-
+import com.lafaspot.common.types.TimeValue;
 import org.testng.annotations.Test;
-
-import com.lafaspot.jmetrics.monitor.ContainerMonitor;
 
 /**
  * Test for MonitorDirectory.
@@ -39,7 +37,6 @@ public class MonitorDirectoryTest {
 
         directory.getMonitor("one");
         directory.getMonitor("one");
-
         directory.getMonitor("one");
         directory.getMonitor("one");
         directory.getMonitor("two");

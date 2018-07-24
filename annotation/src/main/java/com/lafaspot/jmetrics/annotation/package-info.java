@@ -19,4 +19,5 @@
 /**
  * Metric Annotation.
  */
+
 package com.lafaspot.jmetrics.annotation;
