@@ -18,6 +18,7 @@
 
 package com.lafaspot.jmetrics.common;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -63,5 +64,43 @@ public class MonitorManager<T extends BaseMonitor> {
         return monitorDirectory.getMonitor(stringBuilder.append(clazz.getClass().getName()).append(":namespace=")
         .append(String.join("|", orderedNamespace)).append(",type=").append(clazz.getCanonicalName()).append(",id=")
         .append(ID).toString());
+    }
+
+    /**
+     * Returns host monitor for the give uri.
+     *
+     * @param uri Request uri
+     * @return BaseMonitor instance
+     */
+    @Deprecated
+    public T getHostMonitor(final URI uri) {
+        final String beanName = uri.getScheme() + "-" + uri.getHost() + "-" + uri.getPort();
+        return getHostStats(beanName);
+    }
+
+    /**
+     * Manages handing out and creating Monitor objects.
+     *
+     * @param beanName The bean name to use in case the Monitor object needs to be created
+     * @return A Monitor object for the given host
+     */
+    @Deprecated
+    private T getHostStats(final String beanName) {
+        return monitorDirectory.getMonitor(makeJmxName("hostname", beanName));
+    }
+
+    /**
+     * Creates a JMX name given the logical name.
+     *
+     * @param name The logical name of the bean
+     *
+     * @return A JMX-friendly name for the bean
+     */
+    @Deprecated
+    private String makeJmxName(final String category, final String name) {
+        final StringBuilder jmxNameBuilder = new StringBuilder();
+        jmxNameBuilder.append(clazz.getClass().getName()).append(":category=").append(category).append(",type=").append(clazz.getCanonicalName())
+                .append(",name=").append(name);
+        return jmxNameBuilder.toString();
     }
 }
