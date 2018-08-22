@@ -174,6 +174,6 @@ public class MonitorStateHandler<T extends State<T>> {
    public String toString() {
 	   final StringBuilder stringBuilder = new StringBuilder();
 	   return stringBuilder.append("[ Window = ").append(getWindow()).append(", StartTime = ").append(getStartTime()).append(", LastUpdate = ")
-	   .append.(getLastUpdate()).append(", Stable = [").append(stable()).append("], Current = [").append(current()).append("] ]").toString();
+	   .append(getLastUpdate()).append(", Stable = [").append(stable()).append("], Current = [").append(current()).append("] ]").toString();
    }
 }
