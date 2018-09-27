@@ -20,7 +20,6 @@ package com.lafaspot.jmetrics.common;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -33,7 +32,7 @@ import javax.annotation.Nonnull;
  */
 public class MonitorManager<T extends BaseMonitor> {
     /** The id used to distinguish monitors of different classloaders. */
-    public final String ID;
+    private final String id;
     private final MonitorDirectory<T> monitorDirectory;
     private final Class<T> clazz;
     private final Set<String> constNamespaceSet;
@@ -49,7 +48,7 @@ public class MonitorManager<T extends BaseMonitor> {
         this.clazz = clazz;
         this.monitorDirectory = monitorDirectory;
         this.constNamespaceSet = constNamespaceSet;
-        this.ID = id;
+        this.id = id;
     }
 
     /**
@@ -66,7 +65,7 @@ public class MonitorManager<T extends BaseMonitor> {
         final StringBuilder stringBuilder = new StringBuilder();
         return monitorDirectory.getMonitor(stringBuilder.append(clazz.getClass().getName()).append(":namespace=")
         .append(String.join("|", orderedNamespace)).append(",type=").append(clazz.getCanonicalName()).append(",id=")
-        .append(ID).toString());
+        .append(id).toString());
     }
 
     /**
