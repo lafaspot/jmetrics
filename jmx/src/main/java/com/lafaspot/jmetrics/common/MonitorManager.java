@@ -33,7 +33,7 @@ import javax.annotation.Nonnull;
  */
 public class MonitorManager<T extends BaseMonitor> {
     /** The id used to distinguish monitors of different classloaders. */
-    public static final String ID = Integer.toString(new Random(System.nanoTime()).nextInt());
+    public final String ID;
     private final MonitorDirectory<T> monitorDirectory;
     private final Class<T> clazz;
     private final Set<String> constNamespaceSet;
@@ -42,11 +42,14 @@ public class MonitorManager<T extends BaseMonitor> {
      * @param clazz class
      * @param monitorDirectory MonitorDirectory Object
      * @param constNamespaceSet Set of namespace
+     * @param id to distinguish monitors of different classloaders
      */
-    public MonitorManager(final Class<T> clazz, final MonitorDirectory<T> monitorDirectory, final Set<String> constNamespaceSet) {
+    public MonitorManager(final Class<T> clazz, final MonitorDirectory<T> monitorDirectory,
+            final Set<String> constNamespaceSet, final String id) {
         this.clazz = clazz;
         this.monitorDirectory = monitorDirectory;
         this.constNamespaceSet = constNamespaceSet;
+        this.ID = id;
     }
 
     /**
