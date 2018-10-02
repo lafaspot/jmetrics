@@ -41,14 +41,13 @@ public class MonitorManager<T extends BaseMonitor> {
      * @param clazz class
      * @param monitorDirectory MonitorDirectory Object
      * @param constNamespaceSet Set of namespace
-     * @param id to distinguish monitors of different classloaders
      */
     public MonitorManager(final Class<T> clazz, final MonitorDirectory<T> monitorDirectory,
-            final Set<String> constNamespaceSet, final String id) {
+            final Set<String> constNamespaceSet) {
         this.clazz = clazz;
         this.monitorDirectory = monitorDirectory;
         this.constNamespaceSet = constNamespaceSet;
-        this.id = id;
+        this.id = Integer.toString(clazz.getClassLoader().hashCode());
     }
 
     /**

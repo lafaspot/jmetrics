@@ -90,7 +90,7 @@ public class ContainerMonitor implements ContainerMonitorMBean {
 
         /** Stores an instance of the ContainerMonitor. */
         private final MonitorManager<ContainerMonitor> manager = new MonitorManager<ContainerMonitor>(ContainerMonitor.class,
-        		MONITOR_DIRECTORY, CONST_NAMESPACE_SET, this.getClass().getClassLoader().toString());
+        		MONITOR_DIRECTORY, CONST_NAMESPACE_SET);
 
         /**
          * @return monitor manager

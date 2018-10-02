@@ -51,7 +51,7 @@ public class MonitorManagerTest {
         constNamespaceSet.add("Field2");
         constNamespaceSet.add("Field3");
         constNamespaceSet.add("Field4");
-        containerMonitorManager = new MonitorManager<ContainerMonitor>(ContainerMonitor.class, directory, constNamespaceSet, "admin@1234");
+        containerMonitorManager = new MonitorManager<ContainerMonitor>(ContainerMonitor.class, directory, constNamespaceSet);
     }
     /**
      * Test for valid monitor.
