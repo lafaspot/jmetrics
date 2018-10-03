@@ -73,7 +73,7 @@ public class MonitorManagerTest {
         constNamespaceSet.add("Field44");
         MonitorManager<ContainerMonitor> containerMonitorManager2 = new MonitorManager<ContainerMonitor>(ContainerMonitor.class,
                 directory, constNamespaceSet);
-        Assert.assertEquals(containerMonitorManager.getId().hashCode(), containerMonitorManager2.getId().hashCode(),
+        Assert.assertEquals(containerMonitorManager.getId(), containerMonitorManager2.getId(),
                 "There should be only once instance of monitor manager ID per class loader");
     }
     /**
