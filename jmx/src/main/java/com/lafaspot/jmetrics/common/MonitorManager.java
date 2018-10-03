@@ -32,7 +32,7 @@ import javax.annotation.Nonnull;
  */
 public class MonitorManager<T extends BaseMonitor> {
     /** The id used to distinguish monitors of different classloaders. */
-    private final String id;
+    private static String id;
     private final MonitorDirectory<T> monitorDirectory;
     private final Class<T> clazz;
     private final Set<String> constNamespaceSet;
@@ -47,7 +47,17 @@ public class MonitorManager<T extends BaseMonitor> {
         this.clazz = clazz;
         this.monitorDirectory = monitorDirectory;
         this.constNamespaceSet = constNamespaceSet;
-        this.id = Integer.toString(clazz.getClassLoader().hashCode());
+        if (id == null) {
+            id = Integer.toString(clazz.getClassLoader().hashCode());
+        }
+    }
+    /**
+     * Get the ID used to distinguish monitors of different classloaders.
+     *
+     * @return ID of classloader
+     */
+    public String getId() {
+        return id;
     }
 
     /**

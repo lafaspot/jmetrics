@@ -57,6 +57,25 @@ public class MonitorManagerTest {
         containerMonitorManager = new MonitorManager<ContainerMonitor>(ContainerMonitor.class, directory, constNamespaceSet);
         containerMonitorManager.getHostMonitor(new URI("http://oktypes-localhost"));
     }
+
+    /**
+     * Test to ensure there is only one instance of ID for all monitor manager instances.
+     */
+    @Test
+    public void checkOneIdInstancePerClassLoader() {
+        final TimeValue window = new TimeValue(new Long("400").longValue(), TimeUnit.MILLISECONDS);
+        final TimeValue expire = new TimeValue(new Long("50").longValue(), TimeUnit.SECONDS);
+        final MonitorDirectory<ContainerMonitor> directory = new MonitorDirectory<>(ContainerMonitor.class, window, expire);
+        final Set<String> constNamespaceSet = new TreeSet<String>();
+        constNamespaceSet.add("Field11");
+        constNamespaceSet.add("Field22");
+        constNamespaceSet.add("Field33");
+        constNamespaceSet.add("Field44");
+        MonitorManager<ContainerMonitor> containerMonitorManager2 = new MonitorManager<ContainerMonitor>(ContainerMonitor.class,
+                directory, constNamespaceSet);
+        Assert.assertEquals(containerMonitorManager.getId().hashCode(), containerMonitorManager2.getId().hashCode(),
+                "There should be only once instance of monitor manager ID per class loader");
+    }
     /**
      * Test for valid monitor.
      * 
