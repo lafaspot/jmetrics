@@ -50,6 +50,7 @@ public class MonitorManagerTest {
      * Initialize parameters for MonitorManager.
      * @throws URISyntaxException when creating URI object
      */
+    @SuppressWarnings("deprecation")
     @BeforeMethod
     public void initialize() throws URISyntaxException {
     	final TimeValue window = new TimeValue(new Long("300").longValue(), TimeUnit.MILLISECONDS);
@@ -63,7 +64,7 @@ public class MonitorManagerTest {
         containerMonitorManager = new MonitorManager<ContainerMonitor>(ContainerMonitor.class, directory, constNamespaceSet);
         containerMonitorManager.getHostMonitor(new URI("http://oktypes-localhost"));
     }
- 
+
     /**
      * Custom class loader.
      *
