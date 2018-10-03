@@ -18,8 +18,14 @@
 
 package com.lafaspot.jmetrics.common;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
@@ -28,6 +34,7 @@ import java.util.concurrent.TimeUnit;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
+import org.apache.commons.compress.utils.IOUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -39,6 +46,10 @@ import com.lafaspot.common.types.TimeValue;
  *
  */
 public class MonitorManagerTest {
+
+    /**
+     * ContainerMonitorManager.
+     */
     private MonitorManager<ContainerMonitor> containerMonitorManager;
     /**
      * Initialize parameters for MonitorManager.
@@ -57,25 +68,53 @@ public class MonitorManagerTest {
         containerMonitorManager = new MonitorManager<ContainerMonitor>(ContainerMonitor.class, directory, constNamespaceSet);
         containerMonitorManager.getHostMonitor(new URI("http://oktypes-localhost"));
     }
+ 
+    /**
+     * Custom class loader.
+     *
+     */
+    static class CustomClassLoader extends ClassLoader {
+
+        @Override
+        public Class<?> loadClass(final String name) throws ClassNotFoundException {
+            if (!name.equals(ContainerMonitor.class.getCanonicalName())) {
+                return super.loadClass(name);
+            }
+            try {
+                InputStream inputStream = getSystemResourceAsStream("com/lafaspot/jmetrics/common/ContainerMonitor.class");
+                byte[] byteArray = new byte[100000];
+                int length  = inputStream.read(byteArray);
+                inputStream.close();
+                return defineClass(name, byteArray, 0, length);
+            } catch (IOException e) {
+                throw new ClassNotFoundException();
+            }
+        }
+    }
 
     /**
      * Test to ensure there is only one instance of ID for all monitor manager instances.
+     * @throws ClassNotFoundException when class to be loaded is not found
      */
+    @SuppressWarnings({ "unchecked" })
     @Test
-    public void checkOneIdInstancePerClassLoader() {
-        final TimeValue window = new TimeValue(new Long("400").longValue(), TimeUnit.MILLISECONDS);
-        final TimeValue expire = new TimeValue(new Long("50").longValue(), TimeUnit.SECONDS);
-        final MonitorDirectory<ContainerMonitor> directory = new MonitorDirectory<>(ContainerMonitor.class, window, expire);
+    public void checkDifferentIDInstanceForDifferentClassLoader() throws ClassNotFoundException {
+        Class<ContainerMonitor> c1 =  (Class<ContainerMonitor>) new CustomClassLoader().loadClass(ContainerMonitor.class.getCanonicalName());
+        Class<ContainerMonitor> c2 =  (Class<ContainerMonitor>) new CustomClassLoader().loadClass(ContainerMonitor.class.getCanonicalName());
+
+        final TimeValue window = new TimeValue(new Long("300").longValue(), TimeUnit.MILLISECONDS);
+        final TimeValue expire = new TimeValue(new Long("60").longValue(), TimeUnit.SECONDS);
         final Set<String> constNamespaceSet = new TreeSet<String>();
-        constNamespaceSet.add("Field11");
-        constNamespaceSet.add("Field22");
-        constNamespaceSet.add("Field33");
-        constNamespaceSet.add("Field44");
-        MonitorManager<ContainerMonitor> containerMonitorManager2 = new MonitorManager<ContainerMonitor>(ContainerMonitor.class,
-                directory, constNamespaceSet);
-        Assert.assertEquals(containerMonitorManager.getId(), containerMonitorManager2.getId(),
-                "There should be only once instance of monitor manager ID per class loader");
+        constNamespaceSet.add("Field1");
+        constNamespaceSet.add("Field2");
+        constNamespaceSet.add("Field3");
+        constNamespaceSet.add("Field4");
+
+        String id1 = new MonitorManager<ContainerMonitor>(c1, new MonitorDirectory<>(c1, window, expire), constNamespaceSet).getId();
+        String id2 = new MonitorManager<ContainerMonitor>(c2, new MonitorDirectory<>(c2, window, expire), constNamespaceSet).getId();
+        Assert.assertNotEquals(id1, id2, "ID should not be the same since the ContainerMonitor is loaded by different class loaders");
     }
+
     /**
      * Test for valid monitor.
      * 

@@ -32,7 +32,7 @@ import javax.annotation.Nonnull;
  */
 public class MonitorManager<T extends BaseMonitor> {
     /** The id used to distinguish monitors of different classloaders. */
-    private static String id;
+    private String id;
     private final MonitorDirectory<T> monitorDirectory;
     private final Class<T> clazz;
     private final Set<String> constNamespaceSet;
