@@ -31,8 +31,13 @@ import javax.annotation.Nonnull;
  * @author manish211
  */
 public class MonitorManager<T extends BaseMonitor> {
-    /** The id used to distinguish monitors of different classloaders. */
-    private static String id;
+    /**
+     * The id used to distinguish monitors of different classloaders.
+     * MonitorManager stores a unique id of the parent class loader.
+     * This is to distinguish MonitorManagers in war style applications
+     * in case the MonitorManager is loaded outside of war scope.
+     */
+    private String id;
     private final MonitorDirectory<T> monitorDirectory;
     private final Class<T> clazz;
     private final Set<String> constNamespaceSet;
