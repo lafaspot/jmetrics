@@ -115,7 +115,7 @@ public class MonitorManagerTest {
      */
     @SuppressWarnings({ "unchecked" })
     @Test
-    public void getMonitorManagerIdFromClass() throws ClassNotFoundException {
+    public void testGetMonitorManagerIdFromClass() throws ClassNotFoundException {
         String id = MonitorManager.getId(this.getClass());
         String classLoaderId = Integer.toString(this.getClass().getClassLoader().hashCode());
         Assert.assertEquals(id, classLoaderId, "Unexpected monitor manager id found");
