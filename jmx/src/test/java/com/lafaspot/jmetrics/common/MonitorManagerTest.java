@@ -76,11 +76,9 @@ public class MonitorManagerTest {
             if (!name.equals(ContainerMonitor.class.getCanonicalName())) {
                 return super.loadClass(name);
             }
-            try {
-                InputStream inputStream = getSystemResourceAsStream("com/lafaspot/jmetrics/common/ContainerMonitor.class");
+            try (InputStream inputStream = getSystemResourceAsStream("com/lafaspot/jmetrics/common/ContainerMonitor.class")) {
                 byte[] byteArray = new byte[100000];
                 int length  = inputStream.read(byteArray);
-                inputStream.close();
                 return defineClass(name, byteArray, 0, length);
             } catch (IOException e) {
                 throw new ClassNotFoundException();
@@ -109,6 +107,23 @@ public class MonitorManagerTest {
         String id1 = new MonitorManager<ContainerMonitor>(c1, new MonitorDirectory<>(c1, window, expire), constNamespaceSet).getId();
         String id2 = new MonitorManager<ContainerMonitor>(c2, new MonitorDirectory<>(c2, window, expire), constNamespaceSet).getId();
         Assert.assertNotEquals(id1, id2, "ID should not be the same since the ContainerMonitor is loaded by different class loaders");
+    }
+
+    /**
+     * Test to check if the monitor manager getId method returns the correct ID for any input class.
+     * @throws ClassNotFoundException when class to be loaded is not found
+     */
+    @SuppressWarnings({ "unchecked" })
+    @Test
+    public void getMonitorManagerIdFromClass() throws ClassNotFoundException {
+        String id = MonitorManager.getId(this.getClass());
+        String classLoaderId = Integer.toString(this.getClass().getClassLoader().hashCode());
+        Assert.assertEquals(id, classLoaderId, "Unexpected monitor manager id found");
+        //Load class using different class loader and verify the id.
+        Class<ContainerMonitor> c1 =  (Class<ContainerMonitor>) new CustomClassLoader().loadClass(ContainerMonitor.class.getCanonicalName());
+        Class<ContainerMonitor> c2 =  (Class<ContainerMonitor>) new CustomClassLoader().loadClass(ContainerMonitor.class.getCanonicalName());
+        Assert.assertEquals(MonitorManager.getId(c1), Integer.toString(c1.getClassLoader().hashCode()), "Unexpected monitor manager id found");
+        Assert.assertEquals(MonitorManager.getId(c2), Integer.toString(c2.getClassLoader().hashCode()), "Unexpected monitor manager id found");
     }
 
     /**
