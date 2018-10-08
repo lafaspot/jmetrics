@@ -53,15 +53,15 @@ public class MonitorManager<T extends BaseMonitor> {
         this.monitorDirectory = monitorDirectory;
         this.constNamespaceSet = constNamespaceSet;
         if (id == null) {
-            id = getId(clazz);
+            id = getMonitorManagerId(clazz);
         }
     }
     /**
-     * Method to get monitor manager id derived from the class loader id of input class.
+     * Provides a unique id for MonitorManagers defined in class loader for web apps or jvm scope.
      * @param clazz the class for which the monitor manager id is required
      * @return the monitor manager id of the class
      */
-    public static String getId(final Class<?> clazz) {
+    public static String getMonitorManagerId(@Nonnull final Class<?> clazz) {
         return Integer.toString(clazz.getClassLoader().hashCode());
     }
 
