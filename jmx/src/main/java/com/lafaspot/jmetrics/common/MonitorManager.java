@@ -42,6 +42,15 @@ public class MonitorManager<T extends BaseMonitor> {
     private final Class<T> clazz;
     private final Set<String> constNamespaceSet;
     /**
+     * Class Name of the Monitor class.
+     */
+    private final String className;
+    /**
+     * Canonical Name of the Monitor class.
+     */
+    private final String classCanonicalName;
+
+    /**
      * Constructor.
      * @param clazz class
      * @param monitorDirectory MonitorDirectory Object
@@ -55,6 +64,8 @@ public class MonitorManager<T extends BaseMonitor> {
         if (id == null) {
             id = getMonitorManagerId(clazz);
         }
+        this.className = clazz.getClass().getName();
+        this.classCanonicalName = clazz.getCanonicalName();
     }
     /**
      * Provides a unique id for MonitorManagers defined in class loader for web apps or jvm scope.
@@ -86,8 +97,8 @@ public class MonitorManager<T extends BaseMonitor> {
         orderedNamespace.addAll(namespace);
         orderedNamespace.addAll(constNamespaceSet);
         final StringBuilder stringBuilder = new StringBuilder();
-        return monitorDirectory.getMonitor(stringBuilder.append(clazz.getClass().getName()).append(":namespace=")
-        .append(String.join("|", orderedNamespace)).append(",type=").append(clazz.getCanonicalName()).append(",id=")
+        return monitorDirectory.getMonitor(stringBuilder.append(className).append(":namespace=")
+        .append(String.join("|", orderedNamespace)).append(",type=").append(classCanonicalName).append(",id=")
         .append(id).toString());
     }
 
@@ -124,7 +135,7 @@ public class MonitorManager<T extends BaseMonitor> {
     @Deprecated
     private String makeJmxName(final String category, final String name) {
         final StringBuilder jmxNameBuilder = new StringBuilder();
-        jmxNameBuilder.append(clazz.getClass().getName()).append(":category=").append(category).append(",type=").append(clazz.getCanonicalName())
+        jmxNameBuilder.append(className).append(":category=").append(category).append(",type=").append(classCanonicalName)
                 .append(",name=").append(name);
         return jmxNameBuilder.toString();
     }
