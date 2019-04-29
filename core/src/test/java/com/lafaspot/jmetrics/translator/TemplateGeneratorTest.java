@@ -44,7 +44,7 @@ public class TemplateGeneratorTest {
 	public void test() throws IOException {
 		TemplateGenerator generator = new TemplateGenerator("test", new LogManager());
 		List<String> list = new ArrayList<String>();
-		list.add("com.lafaspot.");
+		list.add("com.lafaspot");
 		File srcDir = new File(this.getClass().getClassLoader().getResource("").getPath());
 		generator.generate("Test", list, "jws-touchstone.template", "./target/",
 				srcDir + "/templates/touchstone/");
