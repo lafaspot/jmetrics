@@ -5,7 +5,7 @@
 	<groupId>com.github.lafa.jmetrics</groupId>
 	<artifactId>jmetrics</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.17</version>
+	<version>1.0.18</version>
 	<name>${project.artifactId}</name>
 	<url>https://github.com/lafaspot/jmetrics</url>
 	<description>Parent POM file for jmetrics project</description>
@@ -65,7 +65,7 @@
 		<excludedJNILibraries />
 		<excludedWarJNILibraries />
 		<jdk.version>1.8</jdk.version>
-		<maven-findbugs-plugin.version>3.0.1</maven-findbugs-plugin.version>
+		<maven-findbugs-plugin.version>3.0.5</maven-findbugs-plugin.version>
 		<maven-surefire-plugin.version>2.17</maven-surefire-plugin.version>
 		<maven-pmd-plugin.version>3.4</maven-pmd-plugin.version>
 		<maven-checkstyle-plugin.version>2.16</maven-checkstyle-plugin.version>
@@ -116,6 +116,11 @@
 				<groupId>com.github.lafa.common</groupId>
 				<artifactId>common.core</artifactId>
 				<version>1.0.7</version>
+			</dependency>
+			<dependency>
+				<groupId>io.github.classgraph</groupId>
+				<artifactId>classgraph</artifactId>
+				<version>4.8.25</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
