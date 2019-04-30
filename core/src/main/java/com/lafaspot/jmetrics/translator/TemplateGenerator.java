@@ -30,6 +30,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -37,10 +38,12 @@ import java.util.Set;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
-import com.lafaspot.common.util.AnnotationClassScanner;
 import com.lafaspot.jmetrics.annotation.MetricCheck;
 import com.lafaspot.jmetrics.annotation.MetricClass;
 import com.lafaspot.logfast.logging.LogManager;
+import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ClassInfoList;
+import io.github.classgraph.ScanResult;
 
 /**
  * Translates the template file to the formatted files based on the parameter
@@ -95,10 +98,14 @@ public class TemplateGenerator {
 		if (!Files.isDirectory(Paths.get(templateSrcDir))) {
 			throw new IllegalArgumentException("Directory: " + templateSrcDir + " does not exist.");
 		}
-		Set<Class<?>> annotatedClazzez = null;
-		final AnnotationClassScanner<MetricClass> scanClasses = new AnnotationClassScanner<MetricClass>(
-				MetricClass.class, allowFilters, this.logManager);
-		annotatedClazzez = scanClasses.scanAnnotatedClasses();
+		Set<Class<?>> annotatedClazzez = new HashSet<>();
+		final ClassGraph classGraph = new ClassGraph();
+		final ScanResult scanResult = classGraph.enableAnnotationInfo().ignoreClassVisibility()
+				.whitelistPackages(allowFilters.toArray(new String[0]))
+				.removeTemporaryFilesAfterScan().scan();
+		final ClassInfoList classInfoList = scanResult.getClassesWithAnnotation(MetricClass.class.getName());
+		List<Class<?>> classes = classInfoList.loadClasses(true /* Ignore exceptions */);
+		annotatedClazzez.addAll(classes);
 
 		Path outputFilePath = Paths.get(outputDirectory + "/" + outputFileName);
 		File outputFile = new File(outputFilePath.toUri());
