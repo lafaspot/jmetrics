@@ -18,6 +18,7 @@
 
 package com.lafaspot.jmetrics.common;
 
+import com.lafaspot.jmetrics.annotation.Metric;
 /**
  * BaseMonitor to be used by all JMX monitors.
  * 
@@ -61,4 +62,14 @@ public interface BaseMonitor {
      * Unregister the Mbean from MBean server. This is required to avoid cluttering of monitors which have no activity.
      */
     void unRegisterMBean();
+    
+    /**
+     * get the metric annotation info.
+     */
+    Metric getMetricAnnotation(final String methodName);
+
+    /**
+     * get the metric class annotation info.
+     */
+    String getMetricClassName();
 }
