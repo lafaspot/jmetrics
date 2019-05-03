@@ -62,7 +62,7 @@ public interface BaseMonitor {
      * Unregister the Mbean from MBean server. This is required to avoid cluttering of monitors which have no activity.
      */
     void unRegisterMBean();
-    
+
     /**
      * get the metric annotation info.
      * @param methodName method's name
