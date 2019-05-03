@@ -65,11 +65,14 @@ public interface BaseMonitor {
     
     /**
      * get the metric annotation info.
+     * @param methodName method's name
+     * @return Metric Returns metric annotation info.
      */
     Metric getMetricAnnotation(final String methodName);
 
     /**
      * get the metric class annotation info.
+     * @return Returns the classname in MetricClass annotation.
      */
     String getMetricClassName();
 }
