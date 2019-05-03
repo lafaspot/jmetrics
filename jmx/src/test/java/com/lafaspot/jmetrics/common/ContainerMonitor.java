@@ -44,7 +44,7 @@ import com.lafaspot.common.types.TimeValue;
  *
  */
 @MetricClass(enable = true, name = "ContainerMonitor", applications = { "admin" })
-public class ContainerMonitor implements ContainerMonitorMBean {
+public class ContainerMonitor extends AnnotationGetter implements ContainerMonitorMBean {
     /**
      * The default namespace to use while creating a monitor for the local instance.
      */
