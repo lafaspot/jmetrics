@@ -82,7 +82,7 @@ public class ContainerMonitorTest {
         Assert.assertTrue(ManagementFactory.getPlatformMBeanServer().isRegistered(new ObjectName(beanName)), "The Bean should be registered.");
 
         monitor.flip();
-        
+
         Assert.assertEquals(monitor.getMetricClassName(), "ContainerMonitor");
         Assert.assertEquals(monitor.getMetricClassName(), "ContainerMonitor");
         Assert.assertNotNull(monitor.getMetricAnnotation("MaxTime"));
