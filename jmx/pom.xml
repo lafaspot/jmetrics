@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.github.lafa.jmetrics</groupId>
 		<artifactId>jmetrics</artifactId>
-		<version>1.0.18</version>
+		<version>1.0.19</version>
 	</parent>
 	<artifactId>jmetrics.jmx</artifactId>
 	<name>${project.artifactId}</name>
@@ -36,6 +36,10 @@
 			<groupId>com.github.lafa.common</groupId>
 			<artifactId>common.core</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>io.github.classgraph</groupId>
+            <artifactId>classgraph</artifactId>
+        </dependency>
 	</dependencies>
 	<build>
 		<plugins>
