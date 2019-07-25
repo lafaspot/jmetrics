@@ -80,14 +80,12 @@ public class MonitorScanner implements MonitorScannerMBean {
     /**
      * Get All monitors and store metric metricClass to compositeData[].
      *
-     * @throws OpenDataException creating compositetype fail
      */
     private void scan() {
         final Set<Class<?>> monitorClasses = new HashSet<>();
         final ClassGraph classGraph = new ClassGraph();
         classGraph.enableAnnotationInfo().ignoreClassVisibility().blacklistLibOrExtJars()
-                .removeTemporaryFilesAfterScan()
-                .overrideClassLoaders(this.getClass().getClassLoader()).ignoreParentClassLoaders();
+                .removeTemporaryFilesAfterScan();
         if (whitelistedPackagesList.size() > 0) {
             classGraph.whitelistPackages(whitelistedPackagesList.toArray(new String[0]));
         }
@@ -96,15 +94,23 @@ public class MonitorScanner implements MonitorScannerMBean {
         }
         final ScanResult scanResult = classGraph.scan();
         final ClassInfoList classInfoList = scanResult.getClassesWithAnnotation(MetricClass.class.getName());
-        monitorClasses.addAll(classInfoList.loadClasses(true));
+        // Filter class only in the scope of current classloader.
+        final List<Class<?>> currentClassLoaderClassesList = new ArrayList<>();
+        for (final Class<?> clazz : classInfoList.loadClasses(true)) {
+            final ClassLoader currentClassLoader = this.getClass().getClassLoader();
+            if (clazz.getClassLoader().equals(currentClassLoader)) {
+                currentClassLoaderClassesList.add(clazz);
+            }
+        }
+        monitorClasses.addAll(currentClassLoaderClassesList);
 
         final List<CompositeData> metricClassCompositesList = new ArrayList<>();
         for (Class<?> monitorClass : monitorClasses) {
             try {
                 final CompositeData metricClassComposite = new MonitorCompositeDataBuilder(monitorClass).getMetricClassData();
                 metricClassCompositesList.add(metricClassComposite);
-            } catch (OpenDataException ox) {
-                logger.error("Getting monitor metricaAnnotation failed: " + monitorClass.getName());
+            } catch (OpenDataException | NullPointerException ox) {
+                logger.error("Build monitor metricaAnnotation failed: " + monitorClass.getName());
             }
         }
 
@@ -156,6 +162,7 @@ public class MonitorScanner implements MonitorScannerMBean {
             throws InstanceAlreadyExistsException, MBeanRegistrationException, NotCompliantMBeanException, MalformedObjectNameException {
         final MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
         final StringBuilder mBeanNameBuilder = new StringBuilder(beanNamePrefix);
+        mBeanNameBuilder.append(":type=").append(this.getClass().getSimpleName());
         mBeanNameBuilder.append(",id=").append(UUID.randomUUID());
         mbs.registerMBean(this, new ObjectName(mBeanNameBuilder.toString()));
         mBeanName = mBeanNameBuilder.toString();
