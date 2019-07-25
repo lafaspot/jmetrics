@@ -30,4 +30,9 @@ public interface MonitorScannerMBean {
      * @return the CompossiteData of monitor metric.
      */
     CompositeData getAllMonitorCompositeData();
+
+    /**
+     * Call by public to do scan.
+     */
+    void doScan();
 }
