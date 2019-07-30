@@ -59,7 +59,7 @@ public class MonitorCompositeDataTest {
         blacklistedPackages.add("io.netty");
         blacklistedPackages.add("com.google");
         final MonitorScanner monitorDataScanner = new MonitorScanner(whitelistedPackages, blacklistedPackages);
-        monitorDataScanner.registerMBean("com.lafaspot.jmetrics.common:type=MonitorScanner");
+        monitorDataScanner.registerMBean("com.lafaspot.jmetrics.common");
 
         final MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
         final String objName = "*:type=MonitorScanner,*";
