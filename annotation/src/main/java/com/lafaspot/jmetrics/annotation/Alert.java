@@ -33,12 +33,12 @@ import java.lang.annotation.Target;
 @Documented
 public @interface Alert {
 	/**
-	 * Metric maximum threshold value.
+	 * @return Metric maximum threshold value.
 	 */
 	long max() default 0;
 
 	/**
-	 * Metric minimum threshold value.
+	 * @return Metric minimum threshold value.
 	 */
 	long min() default 0;
 }

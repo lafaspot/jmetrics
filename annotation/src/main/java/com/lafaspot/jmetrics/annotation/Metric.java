@@ -32,22 +32,22 @@ import java.lang.annotation.Target;
 @Documented
 public @interface Metric {
 	/**
-	 * Name of the metric.
+	 * @return Name of the metric.
 	 */
 	String name() default "";
 
 	/**
-	 * Enable/Disable the metric annotation.
+	 * @return Enable/Disable the metric annotation.
 	 */
 	boolean enable() default true;
 
 	/**
-	 * Metric type.
+	 * @return Metric type.
 	 */
 	String type() default "count";
 
 	/**
-	 * Metric unit.
+	 * @return Metric unit.
 	 */
 	String unit() default "";
 

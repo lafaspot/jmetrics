@@ -33,33 +33,32 @@ import java.lang.annotation.Target;
 @Documented
 public @interface MetricCheck {
 	/**
-	 * Enable/Disable the metric check annotation.
+	 * @return Enable/Disable the metric check annotation.
 	 */
 	boolean enable() default true;
 
 	/**
-	 * Metric type.
+	 * @return Metric type.
 	 */
 	String type() default "";
 
 	/**
-	 * Expression which allows different method as part of the calculation.
-	 *
+	 * @return Expression which allows different method as part of the calculation.
 	 */
 	String expression() default "";
 
 	/**
-	 * Metric maximum threshold value.
+	 * @return Metric maximum threshold value.
 	 */
 	long max() default 0;
 
 	/**
-	 * Metric minimum threshold value.
+	 * @return Metric minimum threshold value.
 	 */
 	long min() default 0;
 
 	/**
-	 * Metric maximum deviation threshold allowed for given type.
+	 * @return Metric maximum deviation threshold allowed for given type.
 	 */
 	double maxDeviation() default 0;
 }
