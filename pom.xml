@@ -5,7 +5,7 @@
 	<groupId>com.github.lafa.jmetrics</groupId>
 	<artifactId>jmetrics</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.20</version>
+	<version>1.0.21</version>
 	<name>${project.artifactId}</name>
 	<url>https://github.com/lafaspot/jmetrics</url>
 	<description>Parent POM file for jmetrics project</description>
@@ -71,9 +71,10 @@
 		<maven-checkstyle-plugin.version>2.16</maven-checkstyle-plugin.version>
 		<jersey.version>2.18</jersey.version>
 		<jackson.version>2.5.3</jackson.version>
-		<jacoco-maven-plugin.version>0.7.5.201505241946</jacoco-maven-plugin.version>
+		<jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
 		<testTimeLimitInSeconds>0</testTimeLimitInSeconds>
 		<main.basedir>${project.basedir}</main.basedir>
+        <jacocoArgLine> </jacocoArgLine>
 	</properties>
 
 	<dependencies>
@@ -414,9 +415,9 @@
 				<configuration>
 					<forkMode>once</forkMode>
 					<!-- do not change the library.path - lafa -->
-					<argLine>-Dfile.encoding=ANSI_X3.4-1968
-						-Djava.library.path=
-						-javaagent:"${settings.localRepository}"/org/jacoco/org.jacoco.agent/${jacoco-maven-plugin.version}/org.jacoco.agent-${jacoco-maven-plugin.version}-runtime.jar=destfile=${basedir}/target/jacoco.exec</argLine>
+					<!-- JDK9 and above doesn't allow to JVM to attach itself, our UT connects to self and tests.
+						using jdk.attach.allowAttachSelf allows to do that. -->
+					<argLine>@{jacocoArgLine} -Dfile.encoding=ANSI_X3.4-1968 -Djava.library.path= -Djdk.attach.allowAttachSelf=true</argLine>
 					<excludedGroups>notIsolate,EventListenersRegression</excludedGroups>
 					<!-- DO NOT TOUCH: SETTINGS BELOW ALLOW THE CONFIG LOADER TO FIND CONFIG 
 						TEST RESOURCES :- LAFA -->
@@ -541,7 +542,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.9.1</version>
+				<version>3.1.0</version>
+				<!-- Known issue: https://bugs.openjdk.java.net/browse/JDK-8212233 -->
+				<configuration>
+					<source>8</source>
+				</configuration>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
