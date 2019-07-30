@@ -11,7 +11,7 @@ env:
   - secure: Nd26Gdj3oa2aquUvftFKc4M6Cms3Vz5aNNuFkUf1W04cbqzoBFLtHDlsVQ1ICaHmJ+seL2Melc9zM45nL3t1iB04hmRi16b8Gi+kUQ/jkBt1RqQC5DssK2Qjd3/vwJCsZAFPXrAxtYeEaWRvoJ5xHWX5XN8CO/XQ+9+/T6wl+NehW8dh+jx94pzBP4mckXLleBjAGX+dIOYmQX8rD7HdsmUi6AOFecJMf1nurzX0OXZ0YMFppUBqgWMsiPmGzM4b7ZVp/a04c3/pmjdQRTQRcXvSGXVpPwmy9Yhpucys1SS/lZmm4jkBX7shC2t6WMyXDv1f5OFRRCGN8ypXLCQCTp0f90iiptJXz9i1KItEX3Bx9OZFgZWI6Pw4XoMT3UEso5SC90YGV4PueJS2Ew3lCq5W1vg94g2xtuxflhxnfzTeusnHigqCwfPVG4UWdYRpMHtFzg7vo56y22LW/5h8At8YWBuaO3sZTMWCdhZDb0t9BRgUITuD5N3GW+ijoL/S5uC5/bZjV0r/HjaayaquePF7U18l/EqlBQYE3xjg9PUGzF0Ux7eTn2wpgBuIm6avHE9XxDkUFo1zUNO2Cyb0s7lRC65ChNEHKn7Nd+T9WDnSffbI5fPE3MVpCXE7corE7jzObCfWfqXN7F13hIX6MnnJ++WDvrNQRM6owRCa/pw=
 dist: trusty
 jdk:
-- oraclejdk8
+- oraclejdk12
 before_install: 
 install:
 - mvn install -Dgpg.skip=true -P !build-extras -B -V
