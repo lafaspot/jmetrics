@@ -22,11 +22,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
+
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
@@ -76,7 +76,8 @@ public class MonitorManagerTest {
             if (!name.equals(ContainerMonitor.class.getCanonicalName())) {
                 return super.loadClass(name);
             }
-            try (InputStream inputStream = getSystemResourceAsStream("com/lafaspot/jmetrics/common/ContainerMonitor.class")) {
+            try {
+                InputStream inputStream = getSystemResourceAsStream("com/lafaspot/jmetrics/common/ContainerMonitor.class");
                 byte[] byteArray = new byte[100000];
                 int length  = inputStream.read(byteArray);
                 return defineClass(name, byteArray, 0, length);
